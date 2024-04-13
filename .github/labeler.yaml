@@ -1,0 +1,21 @@
+# Modules
+":floppy_disk: account":
+- modules/account/**/*
+
+":floppy_disk: organization":
+- modules/organization/**/*
+
+":floppy_disk: organizational-unit":
+- modules/organizational-unit/**/*
+
+":floppy_disk: ram-share":
+- modules/ram-share/**/*
+
+":floppy_disk: sso-access-control-attributes":
+- modules/sso-access-control-attributes/**/*
+
+":floppy_disk: sso-account-assignments":
+- modules/sso-account-assignments/**/*
+
+":floppy_disk: sso-permission-set":
+- modules/sso-permission-set/**/*

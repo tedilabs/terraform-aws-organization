@@ -1,0 +1,34 @@
+version: 2
+updates:
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/account"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/organization"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/organizational-unit"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/ram-share"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/sso-access-control-attributes"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/sso-account-assignment"
+  schedule:
+    interval: "daily"
+- package-ecosystem: "terraform"
+  directory: "/modules/sso-permission-set"
+  schedule:
+    interval: "daily"

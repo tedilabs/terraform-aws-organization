@@ -9,13 +9,23 @@ output "email" {
 }
 
 output "id" {
-  description = "The ID of this account."
+  description = "The ID of this AWS account."
   value       = aws_organizations_account.this.id
 }
 
 output "arn" {
   description = "The Amazon Resource Name (ARN) of this account."
   value       = aws_organizations_account.this.arn
+}
+
+output "govcloud_account_id" {
+  description = "The ID for a GovCloud account created with the account."
+  value       = aws_organizations_account.this.govcloud_id
+}
+
+output "status" {
+  description = "The status of the account in the organization."
+  value       = aws_organizations_account.this.status
 }
 
 output "parent_id" {
@@ -30,7 +40,7 @@ output "iam_user_access_to_billing_allowed" {
 
 output "preconfigured_administrator_role_name" {
   description = "The name of an IAM role that allow users in the master account to assume as administrator."
-  value       = var.preconfigured_administrator_role_name
+  value       = aws_organizations_account.this.role_name
 }
 
 output "delegated_services" {
@@ -47,3 +57,11 @@ output "created_at" {
   description = "The datetime which this account joined to the organization."
   value       = aws_organizations_account.this.joined_timestamp
 }
+
+# output "debug" {
+#   value = {
+#     for k, v in aws_organizations_account.this :
+#     k => v
+#     if !contains(["id", "arn", "name", "parent_id", "tags", "tags_all", "close_on_deletion", "joined_timestamp", "joined_method", "role_name", "email", "status", "iam_user_access_to_billing", "govcloud_id"], k)
+#   }
+# }

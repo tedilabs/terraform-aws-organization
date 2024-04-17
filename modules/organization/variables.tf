@@ -11,39 +11,31 @@ variable "all_features_enabled" {
   nullable    = false
 }
 
-variable "ai_services_opt_out_policy_type_enabled" {
-  description = "(Optional) Whether to enable AI services opt-out polices in the Organization."
-  type        = bool
-  default     = false
-  nullable    = false
-}
-
-variable "backup_policy_type_enabled" {
-  description = "(Optional) Whether to enable Backup polices in the Organization."
-  type        = bool
-  default     = false
-  nullable    = false
-}
-
-variable "service_control_policy_type_enabled" {
-  description = "(Optional) Whether to enable Service control polices(SCPs) in the Organization."
-  type        = bool
-  default     = true
-  nullable    = false
-}
-
-variable "tag_policy_type_enabled" {
-  description = "(Optional) Whether to enable Tag polices in the Organization."
-  type        = bool
-  default     = false
-  nullable    = false
-}
-
 variable "trusted_access_enabled_service_principals" {
   description = "(Optional) List of AWS service principal names for which you want to enable integration with the organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must `all_featrues_enabled` set to true."
   type        = set(string)
   default     = []
   nullable    = false
+}
+
+variable "enabled_policy_types" {
+  description = "(Optional) A set of Organizations Policy types to enable in the Organization Root. Organization must enable all features. Valid values are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`."
+  type        = set(string)
+  default     = []
+  nullable    = false
+
+  validation {
+    condition = alltrue([
+      for policy_type in var.enabled_policy_types :
+      contains([
+        "AISERVICES_OPT_OUT_POLICY",
+        "BACKUP_POLICY",
+        "SERVICE_CONTROL_POLICY",
+        "TAG_POLICY"
+      ], policy_type)
+    ])
+    error_message = "Valid values for `enabled_policy_types` are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`."
+  }
 }
 
 variable "policies" {

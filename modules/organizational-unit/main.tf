@@ -20,6 +20,11 @@ locals {
   organization_root_id = data.aws_organizations_organization.this.roots[0].id
 }
 
+
+###################################################
+# Organizationl Unit
+###################################################
+
 resource "aws_organizations_organizational_unit" "this" {
   name      = var.name
   parent_id = coalesce(var.parent_id, local.organization_root_id)
@@ -43,4 +48,6 @@ resource "aws_organizations_policy_attachment" "this" {
 
   target_id = aws_organizations_organizational_unit.this.id
   policy_id = each.key
+
+  skip_destroy = false
 }

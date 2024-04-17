@@ -22,3 +22,11 @@ output "accounts" {
   description = "The accounts for the Organizational Unit."
   value       = aws_organizations_organizational_unit.this.accounts
 }
+
+# output "debug" {
+#   value = {
+#     for k, v in aws_organizations_organizational_unit.this :
+#     k => v
+#     if !contains(["id", "arn", "accounts", "name", "parent_id", "tags", "tags_all"], k)
+#   }
+# }

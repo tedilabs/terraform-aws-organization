@@ -11,24 +11,31 @@ variable "email" {
 }
 
 variable "parent_id" {
-  description = "(Optional) Parent Organizational Unit ID or Root ID for the account. Defaults to the Organization default Root ID. A configuration must be present for this argument to perform drift detection."
+  description = "(Optional) Parent Organizational Unit ID or Root ID for the account. Defaults to the Organization default Root ID."
   type        = string
   default     = null
   nullable    = true
 }
 
+variable "close_on_delete" {
+  description = "(Optional) Whether to close the account on deletion. It will only remove from the organization if true. This is not supported for GovCloud accounts. Defaults to `false`."
+  default     = false
+  type        = bool
+  nullable    = false
+}
+
 variable "iam_user_access_to_billing_allowed" {
-  description = "(Optional) If true, the new account enables IAM users to access account billing information if they have the required permissions. If false, then only the root user of the new account can access account billing information."
+  description = "(Optional) If true, the new account enables IAM users to access account billing information if they have the required permissions. If false, then only the root user of the new account can access account billing information. Defaults to `false`."
   type        = bool
   default     = false
   nullable    = false
 }
 
 variable "preconfigured_administrator_role_name" {
-  description = "(Optional) The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the master account, allowing users in the master account to assume the role, as permitted by the master account administrator. The role has administrator permissions in the new member account."
+  description = "(Optional) The name of an IAM role that Organizations automatically preconfigures in the new member account. This role trusts the master account, allowing users in the master account to assume the role, as permitted by the master account administrator. The role has administrator permissions in the new member account. Defaults to `OrganizationAccountAccessRole`."
   type        = string
-  default     = null
-  nullable    = true
+  default     = "OrganizationAccountAccessRole"
+  nullable    = false
 }
 
 variable "delegated_services" {

@@ -52,6 +52,122 @@ variable "policies" {
   nullable    = false
 }
 
+variable "additional_regions" {
+  description = "(Optional) A set of regions to enable in the account."
+  type        = set(string)
+  default     = []
+  nullable    = false
+
+  validation {
+    condition = alltrue([
+      for region in var.additional_regions :
+      contains([
+        "af-south-1",
+        "ap-east-1",
+        "ap-south-2",
+        "ap-southeast-3",
+        "ap-southeast-4",
+        "ca-west-1",
+        "eu-south-1",
+        "eu-south-2",
+        "eu-central-2",
+        "me-south-1",
+        "me-central-1",
+        "il-central-1",
+      ], region)
+    ])
+    error_message = "Available regions for `additional_regions` are `af-south-1`, `ap-east-1`, `ap-south-2`, `ap-southeast-3`, `ap-southeast-4`, `ca-west-1`, `eu-south-1`, `eu-south-2`, `eu-central-2`, `me-south-1`, `me-central-1`, `il-central-1`."
+  }
+}
+
+variable "primary_contact" {
+  description = <<EOF
+  (Optional) The configuration of the primary contact for the AWS Account. `primary_contact` as defined below.
+    (Required) `name` - The full name of the primary contact address.
+    (Optional) `company_name` - The name of the company associated with the primary contact information, if any.
+    (Required) `country_code` - The ISO-3166 two-letter country code for the primary contact address.
+    (Optional) `state` - The state or region of the primary contact address. This field is required in selected countries.
+    (Required) `city` - The city of the primary contact address.
+    (Optional) `district` - The district or county of the primary contact address, if any.
+    (Required) `address_line_1` - The first line of the primary contact address.
+    (Optional) `address_line_2` - The second line of the primary contact address, if any.
+    (Optional) `address_line_3` - The third line of the primary contact address, if any.
+    (Required) `postal_code` - The postal code of the primary contact address.
+    (Required) `phone` - The phone number of the primary contact information. The number will be validated and, in some countries, checked for activation.
+    (Optional) `website_url` -  The URL of the website associated with the primary contact information, if any.
+  EOF
+  type = object({
+    name           = string
+    company_name   = optional(string, "")
+    country_code   = string
+    state          = optional(string, "")
+    city           = string
+    district       = optional(string, "")
+    address_line_1 = string
+    address_line_2 = optional(string, "")
+    address_line_3 = optional(string, "")
+    postal_code    = string
+    phone          = string
+    website_url    = optional(string, "")
+  })
+  nullable = true
+  default  = null
+}
+
+variable "billing_contact" {
+  description = <<EOF
+  (Optional) The configuration of the billing contact for the AWS Account. `billing_contact` as defined below.
+    (Required) `name` - The name of the billing contact.
+    (Optional) `title` - The tile of the billing contact. Defaults to `Billing Manager`.
+    (Required) `email` - The email address of the billing contact.
+    (Required) `phone` - The phone number of the billing contact.
+  EOF
+  type = object({
+    name  = string
+    title = optional(string, "Billing Manager")
+    email = string
+    phone = string
+  })
+  nullable = true
+  default  = null
+}
+
+variable "operation_contact" {
+  description = <<EOF
+  (Optional) The configuration of the operation contact for the AWS Account. `operation_contact` as defined below.
+    (Required) `name` - The name of the operation contact.
+    (Optional) `title` - The tile of the operation contact. Defaults to `Operation Manager`.
+    (Required) `email` - The email address of the operation contact.
+    (Required) `phone` - The phone number of the operation contact.
+  EOF
+  type = object({
+    name  = string
+    title = optional(string, "Operation Manager")
+    email = string
+    phone = string
+  })
+  nullable = true
+  default  = null
+}
+
+variable "security_contact" {
+  description = <<EOF
+  (Optional) The configuration of the security contact for the AWS Account. `security_contact` as defined below.
+    (Required) `name` - The name of the security contact.
+    (Optional) `title` - The tile of the security contact. Defaults to `Security Manager`.
+    (Required) `email` - The email address of the security contact.
+    (Required) `phone` - The phone number of the security contact.
+  EOF
+  type = object({
+    name  = string
+    title = optional(string, "Security Manager")
+    email = string
+    phone = string
+  })
+  nullable = true
+  default  = null
+}
+
 variable "tags" {
   description = "(Optional) A map of tags to add to all resources."
   type        = map(string)

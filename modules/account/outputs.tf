@@ -58,6 +58,59 @@ output "created_at" {
   value       = aws_organizations_account.this.joined_timestamp
 }
 
+output "additional_regions" {
+  description = "A set of additional regions enabled in the account."
+  value       = var.additional_regions
+}
+
+output "primary_contact" {
+  description = "The primary contact attached to an AWS Account."
+  value = try({
+    name           = aws_account_primary_contact.this[0].full_name
+    company_name   = aws_account_primary_contact.this[0].company_name
+    country_code   = aws_account_primary_contact.this[0].country_code
+    state          = aws_account_primary_contact.this[0].state_or_region
+    city           = aws_account_primary_contact.this[0].city
+    district       = aws_account_primary_contact.this[0].district_or_county
+    address_line_1 = aws_account_primary_contact.this[0].address_line_1
+    address_line_2 = aws_account_primary_contact.this[0].address_line_2
+    address_line_3 = aws_account_primary_contact.this[0].address_line_3
+    postal_code    = aws_account_primary_contact.this[0].postal_code
+    phone          = aws_account_primary_contact.this[0].phone_number
+    website_url    = aws_account_primary_contact.this[0].website_url
+  }, null)
+}
+
+output "billing_contact" {
+  description = "The billing contact attached to an AWS Account."
+  value = try({
+    name  = aws_account_alternate_contact.billing[0].name
+    title = aws_account_alternate_contact.billing[0].title
+    email = aws_account_alternate_contact.billing[0].email_address
+    phone = aws_account_alternate_contact.billing[0].phone_number
+  }, null)
+}
+
+output "operation_contact" {
+  description = "The operation contact attached to an AWS Account."
+  value = try({
+    name  = aws_account_alternate_contact.operation[0].name
+    title = aws_account_alternate_contact.operation[0].title
+    email = aws_account_alternate_contact.operation[0].email_address
+    phone = aws_account_alternate_contact.operation[0].phone_number
+  }, null)
+}
+
+output "security_contact" {
+  description = "The security contact attached to an AWS Account."
+  value = try({
+    name  = aws_account_alternate_contact.security[0].name
+    title = aws_account_alternate_contact.security[0].title
+    email = aws_account_alternate_contact.security[0].email_address
+    phone = aws_account_alternate_contact.security[0].phone_number
+  }, null)
+}
+
 # output "debug" {
 #   value = {
 #     for k, v in aws_organizations_account.this :

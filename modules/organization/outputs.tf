@@ -18,24 +18,9 @@ output "all_features_enabled" {
   value       = var.all_features_enabled
 }
 
-output "ai_services_opt_out_policy_type_enabled" {
-  description = "Whether AI services opt-out polices are enabled."
-  value       = var.ai_services_opt_out_policy_type_enabled
-}
-
-output "backup_policy_type_enabled" {
-  description = "Whether Backup polices are enabled."
-  value       = var.backup_policy_type_enabled
-}
-
-output "service_control_policy_type_enabled" {
-  description = "Whether Service control polices(SCPs) are enabled."
-  value       = var.service_control_policy_type_enabled
-}
-
-output "tag_policy_type_enabled" {
-  description = "Whether Tag polices are enabled."
-  value       = var.tag_policy_type_enabled
+output "enabled_policy_types" {
+  description = "A set of Organizations Policy types enabled in the Organization Root."
+  value       = aws_organizations_organization.this.enabled_policy_types
 }
 
 output "trusted_access_enabled_service_principals" {
@@ -70,3 +55,11 @@ output "root" {
     name = aws_organizations_organization.this.roots[0].name
   }
 }
+
+# output "debug" {
+#   value = {
+#     for k, v in aws_organizations_organization.this :
+#     k => v
+#     if !contains(["id", "arn", "accounts", "master_account_id", "master_account_arn", "master_account_email", "non_master_accounts", "roots", "aws_service_access_principals", "enabled_policy_types", "feature_set"], k)
+#   }
+# }

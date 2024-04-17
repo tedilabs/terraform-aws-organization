@@ -23,6 +23,7 @@ locals {
   # - `account.amazonaws.com`
   # - `auditmanager.amazonaws.com`
   # - `detective.amazonaws.com`
+  # - `resource-explorer-2.amazonaws.com`
   # - `securityhub.amazonaws.com`
   # - `sso.amazonaws.com`
   organization_managed_trusted_accesses = setsubtract(

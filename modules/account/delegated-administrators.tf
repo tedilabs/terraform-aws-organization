@@ -17,6 +17,7 @@ locals {
 
 # INFO: confirmed service principals
 # - `account.amazonaws.com`
+# - `resource-explorer-2.amazonaws.com`
 # - `sso.amazonaws.com`
 resource "aws_organizations_delegated_administrator" "this" {
   for_each = toset([

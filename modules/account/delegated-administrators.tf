@@ -8,6 +8,9 @@ locals {
     "macie.amazonaws.com",
     "securityhub.amazonaws.com",
   ]
+  regional_services = [
+    "macie.amazonaws.com",
+  ]
 }
 
 
@@ -16,7 +19,10 @@ locals {
 ###################################################
 
 # INFO: confirmed service principals
+# - `access-analyzer.amazonaws.com`
 # - `account.amazonaws.com`
+# - `config.amazonaws.com`
+# - `config-multiaccountsetup.amazonaws.com`
 # - `resource-explorer-2.amazonaws.com`
 # - `sso.amazonaws.com`
 resource "aws_organizations_delegated_administrator" "this" {
@@ -50,12 +56,6 @@ resource "aws_fms_admin_account" "this" {
 
 resource "aws_guardduty_organization_admin_account" "this" {
   count = contains(var.delegated_services, "guardduty.amazonaws.com") ? 1 : 0
-
-  admin_account_id = aws_organizations_account.this.id
-}
-
-resource "aws_macie2_organization_admin_account" "this" {
-  count = contains(var.delegated_services, "macie.amazonaws.com") ? 1 : 0
 
   admin_account_id = aws_organizations_account.this.id
 }

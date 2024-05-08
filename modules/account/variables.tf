@@ -43,6 +43,16 @@ variable "delegated_services" {
   type        = set(string)
   default     = []
   nullable    = false
+
+  validation {
+    condition = alltrue([
+      for service in var.delegated_services :
+      !contains([
+        "macie.amazonaws.com",
+      ], service)
+    ])
+    error_message = "The following service principals provide delegated administrator functionality on a per-region basis: `macie.amazonaws.com`."
+  }
 }
 
 variable "policies" {

@@ -20,9 +20,15 @@ locals {
     "servicecatalog.amazonaws.com",
   ])
   # INFO: confirmed service principals
+  # - `access-analyzer.amazonaws.com`
   # - `account.amazonaws.com`
   # - `auditmanager.amazonaws.com`
+  # - `cloudtrail.amazonaws.com`
+  # - `config.amazonaws.com`
+  # - `config-multiaccountsetup.amazonaws.com`
+  # - `cost-optimization-hub.bcm.amazonaws.com`
   # - `detective.amazonaws.com`
+  # - `macie.amazonaws.com`
   # - `resource-explorer-2.amazonaws.com`
   # - `securityhub.amazonaws.com`
   # - `sso.amazonaws.com`

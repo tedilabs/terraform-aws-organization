@@ -49,9 +49,10 @@ variable "delegated_services" {
       for service in var.delegated_services :
       !contains([
         "macie.amazonaws.com",
+        "inspector2.amazonaws.com",
       ], service)
     ])
-    error_message = "The following service principals provide delegated administrator functionality on a per-region basis: `macie.amazonaws.com`."
+    error_message = "The following service principals provide delegated administrator functionality on a per-region basis: `inspector2.amazonaws.com`, `macie.amazonaws.com`."
   }
 }
 

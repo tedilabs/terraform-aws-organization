@@ -5,6 +5,8 @@ This module creates following resources.
 - `aws_organizations_organization`
 - `aws_organizations_policy_attachment` (optional)
 - `aws_ram_sharing_with_organization` (optional)
+- `aws_servicecatalog_organizations_access` (optional)
+- `aws_servicequotas_template_association` (optional)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -32,6 +34,7 @@ No modules.
 | [aws_organizations_policy_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_policy_attachment) | resource |
 | [aws_ram_sharing_with_organization.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_sharing_with_organization) | resource |
 | [aws_servicecatalog_organizations_access.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/servicecatalog_organizations_access) | resource |
+| [aws_servicequotas_template_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/servicequotas_template_association) | resource |
 
 ## Inputs
 

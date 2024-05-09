@@ -4,11 +4,13 @@ locals {
     "detective.amazonaws.com",
     "fms.amazonaws.com",
     "guardduty.amazonaws.com",
+    "inspector2.amazonaws.com",
     "ipam.amazonaws.com",
     "macie.amazonaws.com",
     "securityhub.amazonaws.com",
   ]
   regional_services = [
+    "inspector2.amazonaws.com",
     "macie.amazonaws.com",
   ]
 }
@@ -21,10 +23,14 @@ locals {
 # INFO: confirmed service principals
 # - `access-analyzer.amazonaws.com`
 # - `account.amazonaws.com`
+# - `compute-optimizer.amazonaws.com`
 # - `config.amazonaws.com`
 # - `config-multiaccountsetup.amazonaws.com`
+# - `health.amazonaws.com`
+# - `reporting.trustedadvisor.amazonaws.com`
 # - `resource-explorer-2.amazonaws.com`
 # - `sso.amazonaws.com`
+# - `storage-lens.s3.amazonaws.com`
 resource "aws_organizations_delegated_administrator" "this" {
   for_each = toset([
     for service in var.delegated_services :

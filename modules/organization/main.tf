@@ -16,22 +16,37 @@ locals {
 
 locals {
   individual_trusted_accesses = toset([
+    # INFO: Using the IPAM `EnableIpamOrganizationAdminAccount` API, automatically grant trusted access to IPAM
+    "ipam.amazonaws.com",
     "ram.amazonaws.com",
     "servicecatalog.amazonaws.com",
+    "servicequotas.amazonaws.com",
+    # INFO: Use the Well Architected Tool `update-global-settings` API
+    "wellarchitected.amazonaws.com",
   ])
   # INFO: confirmed service principals
   # - `access-analyzer.amazonaws.com`
   # - `account.amazonaws.com`
   # - `auditmanager.amazonaws.com`
+  # - `aws-artifact-account-sync.amazonaws.com`
+  # - `billing-cost-management.amazonaws.com`
   # - `cloudtrail.amazonaws.com`
+  # - `compute-optimizer.amazonaws.com`
   # - `config.amazonaws.com`
   # - `config-multiaccountsetup.amazonaws.com`
   # - `cost-optimization-hub.bcm.amazonaws.com`
   # - `detective.amazonaws.com`
+  # - `fms.amazonaws.com`
+  # - `health.amazonaws.com`
+  # - `inspector2.amazonaws.com`
   # - `macie.amazonaws.com`
+  # - `reporting.trustedadvisor.amazonaws.com`
   # - `resource-explorer-2.amazonaws.com`
   # - `securityhub.amazonaws.com`
+  # - `ssm.amazonaws.com`
   # - `sso.amazonaws.com`
+  # - `storage-lens.s3.amazonaws.com`
+  # - `tagpolicies.tag.amazonaws.com`
   organization_managed_trusted_accesses = setsubtract(
     var.trusted_access_enabled_service_principals,
     local.individual_trusted_accesses
@@ -47,7 +62,8 @@ resource "aws_organizations_organization" "this" {
   feature_set          = var.all_features_enabled ? "ALL" : "CONSOLIDATED_BILLING"
   enabled_policy_types = var.enabled_policy_types
 
-  aws_service_access_principals = local.organization_managed_trusted_accesses
+  # aws_service_access_principals = local.organization_managed_trusted_accesses
+  aws_service_access_principals = var.trusted_access_enabled_service_principals
 
   lifecycle {
     precondition {
@@ -59,6 +75,12 @@ resource "aws_organizations_organization" "this" {
       error_message = "Policy Types must be enabled when all features are enabled."
     }
   }
+
+  depends_on = [
+    aws_ram_sharing_with_organization.this,
+    aws_servicecatalog_organizations_access.this,
+    aws_servicequotas_template_association.this,
+  ]
 }
 
 
@@ -88,4 +110,9 @@ resource "aws_servicecatalog_organizations_access" "this" {
   count = contains(var.trusted_access_enabled_service_principals, "servicecatalog.amazonaws.com") ? 1 : 0
 
   enabled = true
+}
+
+resource "aws_servicequotas_template_association" "this" {
+  count        = contains(var.trusted_access_enabled_service_principals, "servicequotas.amazonaws.com") ? 1 : 0
+  skip_destroy = false
 }

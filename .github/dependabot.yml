@@ -7,12 +7,6 @@ updates:
 
 - package-ecosystem: terraform
   directories:
-  - /modules/account
-  - /modules/organization
-  - /modules/organizational-unit
-  - /modules/ram-share
-  - /modules/sso-access-control-attributes
-  - /modules/sso-account-assignment
-  - /modules/sso-permission-set
+  - /modules/*
   schedule:
     interval: weekly

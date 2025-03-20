@@ -4,7 +4,7 @@ This module creates following resources.
 
 - `aws_ssoadmin_account_assignment`
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -53,4 +53,4 @@ No modules.
 | <a name="output_name"></a> [name](#output\_name) | The name of the Account Assignment. |
 | <a name="output_permission_set"></a> [permission\_set](#output\_permission\_set) | The Amazon Resource Name (ARN) of the Permission Set |
 | <a name="output_user_assignments"></a> [user\_assignments](#output\_user\_assignments) | List of users who can access to the Permission Set. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

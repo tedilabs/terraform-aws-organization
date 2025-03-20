@@ -13,7 +13,7 @@ This module creates following resources.
 - `aws_account_alternate_contact` (optional)
 - `aws_account_region` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -97,4 +97,4 @@ This module creates following resources.
 | <a name="output_primary_contact"></a> [primary\_contact](#output\_primary\_contact) | The primary contact attached to an AWS Account. |
 | <a name="output_security_contact"></a> [security\_contact](#output\_security\_contact) | The security contact attached to an AWS Account. |
 | <a name="output_status"></a> [status](#output\_status) | The status of the account in the organization. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

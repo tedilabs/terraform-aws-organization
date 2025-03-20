@@ -8,7 +8,7 @@ This module creates following resources.
 - `aws_servicecatalog_organizations_access` (optional)
 - `aws_servicequotas_template_association` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -61,4 +61,4 @@ No modules.
 | <a name="output_non_master_accounts"></a> [non\_master\_accounts](#output\_non\_master\_accounts) | The non-master accounts for the Organization. |
 | <a name="output_root"></a> [root](#output\_root) | The root information of the Organization. |
 | <a name="output_trusted_access_enabled_service_principals"></a> [trusted\_access\_enabled\_service\_principals](#output\_trusted\_access\_enabled\_service\_principals) | List of AWS service principal names which is integrated with the organization. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

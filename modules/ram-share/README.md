@@ -6,7 +6,7 @@ This module creates following resources.
 - `aws_ram_principal_association` (optional)
 - `aws_ram_resource_association` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -60,4 +60,4 @@ This module creates following resources.
 | <a name="output_permissions"></a> [permissions](#output\_permissions) | A list of the Amazon Resource Names (ARNs) of the RAM permission associated with the resource share. |
 | <a name="output_principals"></a> [principals](#output\_principals) | A list of the Amazon Resource Names (ARNs) of the principal associated with the resource share. |
 | <a name="output_resources"></a> [resources](#output\_resources) | A list of the Amazon Resource Names (ARNs) of the resource associated with the resource share. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

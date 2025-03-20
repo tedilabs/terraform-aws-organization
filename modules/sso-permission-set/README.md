@@ -8,7 +8,7 @@ This module creates following resources.
 - `aws_ssoadmin_permissions_boundary_attachment` (optional)
 - `aws_ssoadmin_permission_set_inline_policy` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -69,4 +69,4 @@ This module creates following resources.
 | <a name="output_permissions_boundary"></a> [permissions\_boundary](#output\_permissions\_boundary) | The configuration for the permissions boundary policy of the Permission Set. |
 | <a name="output_relay_state"></a> [relay\_state](#output\_relay\_state) | The relay state URL used to redirect users within the application during the federation authentication process. |
 | <a name="output_session_duration"></a> [session\_duration](#output\_session\_duration) | The length of time that the application user sessions are valid in seconds. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

@@ -4,7 +4,7 @@ This module creates following resources.
 
 - `aws_ssoadmin_instance_access_control_attributes`
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -42,4 +42,4 @@ No modules.
 | <a name="output_attributes"></a> [attributes](#output\_attributes) | A map of attributes for access control are used in permission policies that determine who in an identity source can access your AWS resources. |
 | <a name="output_instance_arn"></a> [instance\_arn](#output\_instance\_arn) | The Amazon Resource Name (ARN) of the SSO Instance. |
 | <a name="output_status"></a> [status](#output\_status) | The status of ID of the Instance Access Control Attribute `instance_arn`. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

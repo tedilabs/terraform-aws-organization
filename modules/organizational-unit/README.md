@@ -5,7 +5,7 @@ This module creates following resources.
 - `aws_organizations_organizational_unit`
 - `aws_organizations_policy_attachment` (optional)
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -55,4 +55,4 @@ This module creates following resources.
 | <a name="output_id"></a> [id](#output\_id) | The ID of the Organizational Unit. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the Organizational Unit. |
 | <a name="output_parent_id"></a> [parent\_id](#output\_parent\_id) | The ID of the parent Organizational Unit. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

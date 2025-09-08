@@ -49,7 +49,7 @@ resource "aws_organizations_account" "this" {
   lifecycle {
     ignore_changes = [
       # INFO: Need to change terraform states manually for imported account
-      # iam_user_access_to_billing,
+      iam_user_access_to_billing,
       role_name,
     ]
   }

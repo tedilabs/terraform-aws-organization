@@ -38,6 +38,7 @@ output "master_account" {
   value = {
     id    = aws_organizations_organization.this.master_account_id
     arn   = aws_organizations_organization.this.master_account_arn
+    name  = aws_organizations_organization.this.master_account_name
     email = aws_organizations_organization.this.master_account_email
   }
 }
@@ -60,6 +61,6 @@ output "root" {
 #   value = {
 #     for k, v in aws_organizations_organization.this :
 #     k => v
-#     if !contains(["id", "arn", "accounts", "master_account_id", "master_account_arn", "master_account_email", "non_master_accounts", "roots", "aws_service_access_principals", "enabled_policy_types", "feature_set"], k)
+#     if !contains(["id", "arn", "accounts", "master_account_id", "master_account_arn", "master_account_email", "master_account_name", "non_master_accounts", "roots", "aws_service_access_principals", "enabled_policy_types", "feature_set"], k)
 #   }
 # }

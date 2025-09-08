@@ -5,7 +5,7 @@ variable "name" {
 }
 
 variable "all_features_enabled" {
-  description = "(Optional) Whether to create AWS Organization with all features or only consolidated billing feature."
+  description = "(Optional) Whether to create AWS Organization with all features or only consolidated billing feature. Defaults to `true`."
   type        = bool
   default     = true
   nullable    = false
@@ -19,7 +19,7 @@ variable "trusted_access_enabled_service_principals" {
 }
 
 variable "enabled_policy_types" {
-  description = "(Optional) A set of Organizations Policy types to enable in the Organization Root. Organization must enable all features. Valid values are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`."
+  description = "(Optional) A set of Organizations Policy types to enable in the Organization Root. Organization must enable all features. Valid values are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `CHATBOT_POLICY`, `DECLARATIVE_POLICY_EC2`, `RESOURCE_CONTROL_POLICY`, `SECURITYHUB_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`."
   type        = set(string)
   default     = []
   nullable    = false
@@ -30,11 +30,15 @@ variable "enabled_policy_types" {
       contains([
         "AISERVICES_OPT_OUT_POLICY",
         "BACKUP_POLICY",
+        "CHATBOT_POLICY",
+        "DECLARATIVE_POLICY_EC2",
+        "RESOURCE_CONTROL_POLICY",
+        "SECURITYHUB_POLICY",
         "SERVICE_CONTROL_POLICY",
         "TAG_POLICY"
       ], policy_type)
     ])
-    error_message = "Valid values for `enabled_policy_types` are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`."
+    error_message = "Valid values for `enabled_policy_types` are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `CHATBOT_POLICY`, `DECLARATIVE_POLICY_EC2`, `RESOURCE_CONTROL_POLICY`, `SECURITYHUB_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`."
   }
 }
 

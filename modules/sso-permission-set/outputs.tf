@@ -58,3 +58,19 @@ output "created_at" {
   description = "The date the Permission Set was created in RFC3339 format."
   value       = aws_ssoadmin_permission_set.this.created_date
 }
+
+output "resource_group" {
+  description = "The resource group created to manage resources in this module."
+  value = merge(
+    {
+      enabled = var.resource_group.enabled && var.module_tags_enabled
+    },
+    (var.resource_group.enabled && var.module_tags_enabled
+      ? {
+        arn  = module.resource_group[0].arn
+        name = module.resource_group[0].name
+      }
+      : {}
+    )
+  )
+}

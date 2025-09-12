@@ -1,6 +1,7 @@
 locals {
   independent_services = [
     "auditmanager.amazonaws.com",
+    "cloudtrail.amazonaws.com",
     "detective.amazonaws.com",
     "fms.amazonaws.com",
     "guardduty.amazonaws.com",
@@ -46,6 +47,12 @@ resource "aws_auditmanager_organization_admin_account_registration" "this" {
   count = contains(var.delegated_services, "auditmanager.amazonaws.com") ? 1 : 0
 
   admin_account_id = aws_organizations_account.this.id
+}
+
+resource "aws_cloudtrail_organization_delegated_admin_account" "this" {
+  count = contains(var.delegated_services, "cloudtrail.amazonaws.com") ? 1 : 0
+
+  account_id = aws_organizations_account.this.id
 }
 
 resource "aws_detective_organization_admin_account" "this" {

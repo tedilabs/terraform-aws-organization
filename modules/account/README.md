@@ -5,6 +5,7 @@ This module creates following resources.
 - `aws_organizations_account`
 - `aws_organizations_policy_attachment` (optional)
 - `aws_organizations_delegated_administrator` (optional)
+- `aws_cloudtrail_organization_delegated_admin_account` (optional)
 - `aws_fms_admin_account` (optional)
 - `aws_guardduty_organization_admin_account` (optional)
 - `aws_securityhub_organization_admin_account` (optional)
@@ -43,6 +44,7 @@ This module creates following resources.
 | [aws_account_primary_contact.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/account_primary_contact) | resource |
 | [aws_account_region.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/account_region) | resource |
 | [aws_auditmanager_organization_admin_account_registration.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/auditmanager_organization_admin_account_registration) | resource |
+| [aws_cloudtrail_organization_delegated_admin_account.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail_organization_delegated_admin_account) | resource |
 | [aws_detective_organization_admin_account.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/detective_organization_admin_account) | resource |
 | [aws_fms_admin_account.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/fms_admin_account) | resource |
 | [aws_guardduty_organization_admin_account.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/guardduty_organization_admin_account) | resource |

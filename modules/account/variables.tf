@@ -39,7 +39,7 @@ variable "preconfigured_administrator_role_name" {
 }
 
 variable "delegated_services" {
-  description = "(Optional) A list of service principals and their regional configurations for which you want to make the member account a delegated administrator. Each service object supports `name` (the service principal) and optional `regions` (set of regions, empty means all regions)."
+  description = "(Optional) A list of service principals and their regional configurations for which you want to make the member account a delegated administrator. For regional services like Inspector2 and Macie, you can specify target regions. Empty regions means all regions."
   type = list(object({
     name    = string
     regions = optional(set(string), [])
@@ -53,6 +53,17 @@ variable "delegated_services" {
       service.name != null && service.name != ""
     ])
     error_message = "All delegated services must have a valid non-empty name (service principal)."
+  }
+
+  validation {
+    condition = alltrue([
+      for service in var.delegated_services :
+      # Regional services (inspector2, macie) must have regions specified if they want regional control
+      !contains(["inspector2.amazonaws.com", "macie.amazonaws.com"], service.name) ||
+      length(service.regions) > 0 ||
+      length(service.regions) == 0 # Empty regions means all regions, which is allowed
+    ])
+    error_message = "Regional services (inspector2.amazonaws.com, macie.amazonaws.com) support regional configuration via the 'regions' field. Use empty list [] for all regions."
   }
 }
 

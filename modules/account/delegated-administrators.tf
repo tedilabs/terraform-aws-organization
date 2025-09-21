@@ -5,9 +5,7 @@ locals {
     "detective.amazonaws.com",
     "fms.amazonaws.com",
     "guardduty.amazonaws.com",
-    "inspector2.amazonaws.com",
     "ipam.amazonaws.com",
-    "macie.amazonaws.com",
     "securityhub.amazonaws.com",
   ]
   regional_services = [

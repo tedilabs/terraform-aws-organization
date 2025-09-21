@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = aws_ram_resource_share.this.region
+}
+
 output "name" {
   description = "The name of the resource share."
   value       = aws_ram_resource_share.this.name

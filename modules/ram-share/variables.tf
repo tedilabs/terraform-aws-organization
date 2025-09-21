@@ -1,10 +1,18 @@
+variable "region" {
+  description = "(Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "name" {
   description = "(Required) The name of the resource share."
   type        = string
+  nullable    = false
 }
 
 variable "external_principals_allowed" {
-  description = "(Optional) Indicates whether principals outside your organization can be associated with a resource share."
+  description = "(Optional) Indicates whether principals outside your organization can be associated with a resource share. Defaults to `false`."
   type        = bool
   default     = false
   nullable    = false

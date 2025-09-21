@@ -21,7 +21,14 @@ locals {
   ]
 }
 
+
+###################################################
+# Resource Share
+###################################################
+
 resource "aws_ram_resource_share" "this" {
+  region = var.region
+
   name = var.name
 
   allow_external_principals = var.external_principals_allowed
@@ -44,6 +51,8 @@ resource "aws_ram_resource_share" "this" {
 resource "aws_ram_principal_association" "this" {
   for_each = toset(var.principals)
 
+  region = var.region
+
   resource_share_arn = aws_ram_resource_share.this.arn
   principal          = each.value
 }
@@ -55,6 +64,8 @@ resource "aws_ram_principal_association" "this" {
 
 resource "aws_ram_resource_association" "this" {
   for_each = toset(var.resources)
+
+  region = var.region
 
   resource_share_arn = aws_ram_resource_share.this.arn
   resource_arn       = each.value

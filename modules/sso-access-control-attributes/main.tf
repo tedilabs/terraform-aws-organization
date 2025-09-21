@@ -14,8 +14,14 @@ locals {
 }
 
 
+###################################################
+# Access Control Attributes for AWS SSO
+###################################################
+
 resource "aws_ssoadmin_instance_access_control_attributes" "this" {
   count = length(keys(var.attributes)) > 0 ? 1 : 0
+
+  region = var.region
 
   instance_arn = local.sso_instance_arn
 

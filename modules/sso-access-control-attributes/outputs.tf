@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = var.region
+}
+
 output "instance_arn" {
   description = "The Amazon Resource Name (ARN) of the SSO Instance."
   value       = one(aws_ssoadmin_instance_access_control_attributes.this[*].instance_arn)

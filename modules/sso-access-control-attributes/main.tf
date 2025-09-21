@@ -7,7 +7,9 @@ locals {
   }
 }
 
-data "aws_ssoadmin_instances" "this" {}
+data "aws_ssoadmin_instances" "this" {
+  region = var.region
+}
 
 locals {
   sso_instance_arn = tolist(data.aws_ssoadmin_instances.this.arns)[0]

@@ -10,6 +10,8 @@ This module creates following resources.
 - `aws_guardduty_organization_admin_account` (optional)
 - `aws_securityhub_organization_admin_account` (optional)
 - `aws_vpc_ipam_organization_admin_account` (optional)
+- `aws_macie2_organization_admin_account` (optional)
+- `aws_inspector2_delegated_admin_account` (optional)
 - `aws_account_primary_contact` (optional)
 - `aws_account_alternate_contact` (optional)
 - `aws_account_region` (optional)

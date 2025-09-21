@@ -39,20 +39,20 @@ variable "preconfigured_administrator_role_name" {
 }
 
 variable "delegated_services" {
-  description = "(Optional) A list of service principals of the AWS service for which you want to make the member account a delegated administrator."
-  type        = set(string)
-  default     = []
-  nullable    = false
+  description = "(Optional) A list of service principals and their regional configurations for which you want to make the member account a delegated administrator. Each service object supports `name` (the service principal) and optional `regions` (set of regions, empty means all regions)."
+  type = list(object({
+    name    = string
+    regions = optional(set(string), [])
+  }))
+  default  = []
+  nullable = false
 
   validation {
     condition = alltrue([
       for service in var.delegated_services :
-      !contains([
-        "macie.amazonaws.com",
-        "inspector2.amazonaws.com",
-      ], service)
+      service.name != null && service.name != ""
     ])
-    error_message = "The following service principals provide delegated administrator functionality on a per-region basis: `inspector2.amazonaws.com`, `macie.amazonaws.com`."
+    error_message = "All delegated services must have a valid non-empty name (service principal)."
   }
 }
 

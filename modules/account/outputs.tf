@@ -45,7 +45,7 @@ output "preconfigured_administrator_role_name" {
 
 output "delegated_services" {
   description = "A list of service principals of the AWS service which the member account is a delegated administrator."
-  value       = var.delegated_services
+  value       = local.delegated_service_names
 }
 
 output "created_by" {

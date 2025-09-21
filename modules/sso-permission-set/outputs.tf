@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = aws_ssoadmin_permission_set.this.region
+}
+
 output "name" {
   description = "The name of the Permission Set."
   value       = aws_ssoadmin_permission_set.this.name

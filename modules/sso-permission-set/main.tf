@@ -14,7 +14,9 @@ locals {
   } : {}
 }
 
-data "aws_ssoadmin_instances" "this" {}
+data "aws_ssoadmin_instances" "this" {
+  region = var.region
+}
 
 locals {
   sso_instance_arn = tolist(data.aws_ssoadmin_instances.this.arns)[0]
@@ -35,7 +37,13 @@ locals {
 }
 
 
+###################################################
+# Permission Set for AWS SSO
+###################################################
+
 resource "aws_ssoadmin_permission_set" "this" {
+  region = var.region
+
   name         = var.name
   description  = var.description
   instance_arn = local.sso_instance_arn
@@ -50,6 +58,10 @@ resource "aws_ssoadmin_permission_set" "this" {
     local.module_tags,
     var.tags,
   )
+
+  timeouts {
+    update = var.timeouts.update
+  }
 }
 
 
@@ -64,6 +76,7 @@ resource "aws_ssoadmin_managed_policy_attachment" "this" {
     if policy.type == "AWS_MANAGED"
   }
 
+  region = var.region
 
   instance_arn       = aws_ssoadmin_permission_set.this.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
@@ -77,6 +90,8 @@ resource "aws_ssoadmin_customer_managed_policy_attachment" "this" {
     "${policy.path}/${policy.name}" => policy
     if policy.type == "CUSTOMER_MANAGED"
   }
+
+  region = var.region
 
   instance_arn       = aws_ssoadmin_permission_set.this.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
@@ -95,6 +110,8 @@ resource "aws_ssoadmin_customer_managed_policy_attachment" "this" {
 resource "aws_ssoadmin_permission_set_inline_policy" "this" {
   count = var.inline_policy != null ? 1 : 0
 
+  region = var.region
+
   instance_arn       = aws_ssoadmin_permission_set.this.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn
   inline_policy      = var.inline_policy
@@ -107,6 +124,8 @@ resource "aws_ssoadmin_permission_set_inline_policy" "this" {
 
 resource "aws_ssoadmin_permissions_boundary_attachment" "this" {
   count = var.permissions_boundary != null ? 1 : 0
+
+  region = var.region
 
   instance_arn       = aws_ssoadmin_permission_set.this.instance_arn
   permission_set_arn = aws_ssoadmin_permission_set.this.arn

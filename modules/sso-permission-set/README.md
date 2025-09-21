@@ -13,14 +13,14 @@ This module creates following resources.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.64 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.12.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.13.0 |
 
 ## Modules
 
@@ -49,10 +49,12 @@ This module creates following resources.
 | <a name="input_managed_policies"></a> [managed\_policies](#input\_managed\_policies) | (Optional) The configuration for managed policies to be attached to the Permission Set. You can assign AWS managed policies, customer managed policies. Each value of `managed_policies` block as defined below.<br/>    (Required) `type` - The type of the managed policy. Valid values are `AWS_MANAGED` or `CUSTOMER_MANAGED`.<br/>    (Optional) `name` - The name of the customer managed policy. Required if `type` is `CUSTOMER_MANAGED`.<br/>    (Optional) `path` - The path of the customer managed policy. Default to `/`.<br/>    (Optional) `arn` - The ARN of the AWS-managed policy. Required if `type` is `AWS_MANAGED`. | <pre>list(object({<br/>    type = string<br/>    name = optional(string)<br/>    path = optional(string, "/")<br/>    arn  = optional(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_module_tags_enabled"></a> [module\_tags\_enabled](#input\_module\_tags\_enabled) | (Optional) Whether to create AWS Resource Tags for the module informations. | `bool` | `true` | no |
 | <a name="input_permissions_boundary"></a> [permissions\_boundary](#input\_permissions\_boundary) | (Optional) The configuration for the permissions boundary policy to be attached to the Permission Set. `permissions_boundary` block as defined below.<br/>    (Required) `type` - The type of the permissions boundary policy. Valid values are `AWS_MANAGED` or `CUSTOMER_MANAGED`.<br/>    (Optional) `name` - The name of the customer managed permissions boundary policy. Required if `type` is `CUSTOMER_MANAGED`.<br/>    (Optional) `path` - The path of the customer managed permissions boundary policy. Default to `/`.<br/>    (Optional) `arn` - The ARN of the AWS-managed permissions boundary policy. Required if `type` is `AWS_MANAGED`. | <pre>object({<br/>    type = string<br/>    name = optional(string)<br/>    path = optional(string, "/")<br/>    arn  = optional(string)<br/>  })</pre> | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | (Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region. | `string` | `null` | no |
 | <a name="input_relay_state"></a> [relay\_state](#input\_relay\_state) | (Optional) The relay state URL used to redirect users within the application during the federation authentication process. | `string` | `null` | no |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | (Optional) A configurations of Resource Group for this module. `resource_group` as defined below.<br/>    (Optional) `enabled` - Whether to create Resource Group to find and group AWS resources which are created by this module. Defaults to `true`.<br/>    (Optional) `name` - The name of Resource Group. A Resource Group name can have a maximum of 127 characters, including letters, numbers, hyphens, dots, and underscores. The name cannot start with `AWS` or `aws`. If not provided, a name will be generated using the module name and instance name.<br/>    (Optional) `description` - The description of Resource Group. Defaults to `Managed by Terraform.`. | <pre>object({<br/>    enabled     = optional(bool, true)<br/>    name        = optional(string, "")<br/>    description = optional(string, "Managed by Terraform.")<br/>  })</pre> | `{}` | no |
-| <a name="input_session_duration"></a> [session\_duration](#input\_session\_duration) | (Optional) The length of time that the application user sessions are valid in seconds. Duration should be a number between `3600` (1 hour) and `43200` (12 hours). | `number` | `3600` | no |
+| <a name="input_session_duration"></a> [session\_duration](#input\_session\_duration) | (Optional) The length of time that the application user sessions are valid in seconds. Duration should be a number between `3600` (1 hour) and `43200` (12 hours). Defaults to `3600` seconds. | `number` | `3600` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) A map of tags to add to all resources. | `map(string)` | `{}` | no |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | (Optional) How long to wait for the permission set to be updated. | <pre>object({<br/>    update = optional(string, "10m")<br/>  })</pre> | `{}` | no |
 
 ## Outputs
 
@@ -65,6 +67,7 @@ This module creates following resources.
 | <a name="output_managed_policies"></a> [managed\_policies](#output\_managed\_policies) | A list of managed policies which are attached to the Permission Set. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the Permission Set. |
 | <a name="output_permissions_boundary"></a> [permissions\_boundary](#output\_permissions\_boundary) | The configuration for the permissions boundary policy of the Permission Set. |
+| <a name="output_region"></a> [region](#output\_region) | The AWS region this module resources resides in. |
 | <a name="output_relay_state"></a> [relay\_state](#output\_relay\_state) | The relay state URL used to redirect users within the application during the federation authentication process. |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | The resource group created to manage resources in this module. |
 | <a name="output_session_duration"></a> [session\_duration](#output\_session\_duration) | The length of time that the application user sessions are valid in seconds. |

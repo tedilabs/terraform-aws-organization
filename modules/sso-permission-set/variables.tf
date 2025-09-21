@@ -1,3 +1,10 @@
+variable "region" {
+  description = "(Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "name" {
   description = "(Required) The name of the Permission Set."
   type        = string
@@ -12,7 +19,7 @@ variable "description" {
 }
 
 variable "session_duration" {
-  description = "(Optional) The length of time that the application user sessions are valid in seconds. Duration should be a number between `3600` (1 hour) and `43200` (12 hours)."
+  description = "(Optional) The length of time that the application user sessions are valid in seconds. Duration should be a number between `3600` (1 hour) and `43200` (12 hours). Defaults to `3600` seconds."
   type        = number
   default     = 3600
   nullable    = false
@@ -30,6 +37,7 @@ variable "relay_state" {
   description = "(Optional) The relay state URL used to redirect users within the application during the federation authentication process."
   type        = string
   default     = null
+  nullable    = true
 }
 
 variable "managed_policies" {
@@ -78,6 +86,7 @@ variable "inline_policy" {
   description = "(Optional) The IAM inline policy to attach to a Permission Set. Only supports one IAM inline policy per Permission Set. Creating or updating this resource will automatically Provision the Permission Set to apply the corresponding updates to all assigned accounts."
   type        = string
   default     = null
+  nullable    = true
 }
 
 variable "permissions_boundary" {
@@ -123,6 +132,15 @@ variable "permissions_boundary" {
     )
     error_message = "`name` is required if `type` is `CUSTOMER_MANAGED`."
   }
+}
+
+variable "timeouts" {
+  description = "(Optional) How long to wait for the permission set to be updated."
+  type = object({
+    update = optional(string, "10m")
+  })
+  default  = {}
+  nullable = false
 }
 
 variable "tags" {

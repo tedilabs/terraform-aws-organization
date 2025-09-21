@@ -7,15 +7,21 @@ locals {
   }
 }
 
-data "aws_ssoadmin_instances" "this" {}
+data "aws_ssoadmin_instances" "this" {
+  region = var.region
+}
 
 data "aws_ssoadmin_permission_set" "this" {
+  region = var.region
+
   instance_arn = local.sso_instance_arn
   arn          = var.permission_set_arn
 }
 
 data "aws_identitystore_group" "this" {
   for_each = toset(var.groups)
+
+  region = var.region
 
   identity_store_id = local.sso_identity_store_id
 
@@ -29,6 +35,8 @@ data "aws_identitystore_group" "this" {
 
 data "aws_identitystore_user" "this" {
   for_each = toset(var.users)
+
+  region = var.region
 
   identity_store_id = local.sso_identity_store_id
 
@@ -53,6 +61,8 @@ locals {
 resource "aws_ssoadmin_account_assignment" "groups" {
   for_each = toset(var.groups)
 
+  region = var.region
+
   instance_arn = local.sso_instance_arn
 
   target_type = "AWS_ACCOUNT"
@@ -62,10 +72,17 @@ resource "aws_ssoadmin_account_assignment" "groups" {
 
   principal_type = "GROUP"
   principal_id   = data.aws_identitystore_group.this[each.key].group_id
+
+  timeouts {
+    create = var.timeouts.create
+    delete = var.timeouts.delete
+  }
 }
 
 resource "aws_ssoadmin_account_assignment" "users" {
   for_each = toset(var.users)
+
+  region = var.region
 
   instance_arn = local.sso_instance_arn
 
@@ -75,5 +92,11 @@ resource "aws_ssoadmin_account_assignment" "users" {
   permission_set_arn = var.permission_set_arn
 
   principal_type = "USER"
-  principal_id   = data.aws_identitystore_user.this[each.key].user_id
+
+  principal_id = data.aws_identitystore_user.this[each.key].user_id
+
+  timeouts {
+    create = var.timeouts.create
+    delete = var.timeouts.delete
+  }
 }

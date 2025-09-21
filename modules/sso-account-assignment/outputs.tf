@@ -1,3 +1,8 @@
+output "region" {
+  description = "The AWS region this module resources resides in."
+  value       = var.region
+}
+
 output "name" {
   description = "The name of the Account Assignment."
   value       = local.metadata.name
@@ -24,7 +29,7 @@ output "identity_store_id" {
 }
 
 output "group_assignments" {
-  description = "List of groups who can access to the Permission Set."
+  description = "A set of groups who can access to the Permission Set."
   value = [
     for name, group in aws_ssoadmin_account_assignment.groups : {
       id   = group.principal_id
@@ -34,7 +39,7 @@ output "group_assignments" {
 }
 
 output "user_assignments" {
-  description = "List of users who can access to the Permission Set."
+  description = "A set of users who can access to the Permission Set."
   value = [
     for name, user in aws_ssoadmin_account_assignment.users : {
       id   = user.principal_id

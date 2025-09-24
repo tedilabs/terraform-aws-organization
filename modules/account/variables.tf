@@ -39,20 +39,24 @@ variable "preconfigured_administrator_role_name" {
 }
 
 variable "delegated_services" {
-  description = "(Optional) A list of service principals of the AWS service for which you want to make the member account a delegated administrator."
-  type        = set(string)
-  default     = []
-  nullable    = false
+  description = <<EOF
+  (Optional) A configurations of delegated services for which you want to make the member account a delegated administrator. `delegated_services` as defined below.
+    (Required) `name` - The service principal for the AWS service for which you want to make the member account a delegated administrator. You can find the service principal in the `ServicePrincipal` field in the `ListDelegatedAdministrators` API response. For example, `guardduty.amazonaws.com` is the service principal for Amazon GuardDuty.
+    (Optional) `regions` - (For regional delegated administration services only) A set of target regions to enable the delegated administrator account in. If you do not specify any regions, the delegated administrator account is enabled in all supported regions.
+  EOF
+  type = list(object({
+    name    = string
+    regions = optional(set(string), [])
+  }))
+  default  = []
+  nullable = false
 
   validation {
     condition = alltrue([
       for service in var.delegated_services :
-      !contains([
-        "macie.amazonaws.com",
-        "inspector2.amazonaws.com",
-      ], service)
+      service.name != null && service.name != ""
     ])
-    error_message = "The following service principals provide delegated administrator functionality on a per-region basis: `inspector2.amazonaws.com`, `macie.amazonaws.com`."
+    error_message = "All delegated services must have a valid non-empty name (service principal)."
   }
 }
 

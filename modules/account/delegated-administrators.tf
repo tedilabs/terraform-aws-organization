@@ -11,6 +11,7 @@ locals {
     "securityhub.amazonaws.com",
   ]
   regional_services = [
+    "guardduty.amazonaws.com",
     "inspector2.amazonaws.com",
     "macie.amazonaws.com",
   ]
@@ -75,12 +76,6 @@ resource "aws_fms_admin_account" "this" {
   account_id = aws_organizations_account.this.id
 }
 
-resource "aws_guardduty_organization_admin_account" "this" {
-  count = contains(local.delegated_service_names, "guardduty.amazonaws.com") ? 1 : 0
-
-  admin_account_id = aws_organizations_account.this.id
-}
-
 resource "aws_securityhub_organization_admin_account" "this" {
   count = contains(local.delegated_service_names, "securityhub.amazonaws.com") ? 1 : 0
 
@@ -91,6 +86,20 @@ resource "aws_vpc_ipam_organization_admin_account" "this" {
   count = contains(local.delegated_service_names, "ipam.amazonaws.com") ? 1 : 0
 
   delegated_admin_account_id = aws_organizations_account.this.id
+}
+
+resource "aws_guardduty_organization_admin_account" "this" {
+  for_each = toset(contains(local.delegated_service_names, "guardduty.amazonaws.com")
+    ? (length(local.delegated_services_map["guardduty.amazonaws.com"].regions) > 0
+      ? local.delegated_services_map["guardduty.amazonaws.com"].regions
+      : local.all_available_regions
+    )
+    : []
+  )
+
+  region = each.key
+
+  admin_account_id = aws_organizations_account.this.id
 }
 
 resource "aws_macie2_organization_admin_account" "this" {

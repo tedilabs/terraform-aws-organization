@@ -39,7 +39,11 @@ variable "preconfigured_administrator_role_name" {
 }
 
 variable "delegated_services" {
-  description = "(Optional) A list of service principals and their regional configurations for which you want to make the member account a delegated administrator. For regional services like Inspector2 and Macie, you can specify target regions. Empty regions means all regions."
+  description = <<EOF
+  (Optional) A configurations of delegated services for which you want to make the member account a delegated administrator. `delegated_services` as defined below.
+    (Required) `name` - The service principal for the AWS service for which you want to make the member account a delegated administrator. You can find the service principal in the `ServicePrincipal` field in the `ListDelegatedAdministrators` API response. For example, `guardduty.amazonaws.com` is the service principal for Amazon GuardDuty.
+    (Optional) `regions` - (For regional delegated administration services only) A set of target regions to enable the delegated administrator account in. If you do not specify any regions, the delegated administrator account is enabled in all supported regions.
+  EOF
   type = list(object({
     name    = string
     regions = optional(set(string), [])
@@ -53,17 +57,6 @@ variable "delegated_services" {
       service.name != null && service.name != ""
     ])
     error_message = "All delegated services must have a valid non-empty name (service principal)."
-  }
-
-  validation {
-    condition = alltrue([
-      for service in var.delegated_services :
-      # Regional services (inspector2, macie) must have regions specified if they want regional control
-      !contains(["inspector2.amazonaws.com", "macie.amazonaws.com"], service.name) ||
-      length(service.regions) > 0 ||
-      length(service.regions) == 0 # Empty regions means all regions, which is allowed
-    ])
-    error_message = "Regional services (inspector2.amazonaws.com, macie.amazonaws.com) support regional configuration via the 'regions' field. Use empty list [] for all regions."
   }
 }
 

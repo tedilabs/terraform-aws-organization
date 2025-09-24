@@ -5,7 +5,9 @@ locals {
     "detective.amazonaws.com",
     "fms.amazonaws.com",
     "guardduty.amazonaws.com",
+    "inspector2.amazonaws.com",
     "ipam.amazonaws.com",
+    "macie.amazonaws.com",
     "securityhub.amazonaws.com",
   ]
   regional_services = [
@@ -19,11 +21,7 @@ locals {
     service.name => service
   }
 
-  # Extract service names for compatibility with existing logic
-  delegated_service_names = [
-    for service in var.delegated_services :
-    service.name
-  ]
+  delegated_service_names = var.delegated_services[*].name
 }
 
 
@@ -46,7 +44,7 @@ resource "aws_organizations_delegated_administrator" "this" {
   for_each = toset([
     for service_name in local.delegated_service_names :
     service_name
-    if !contains(local.independent_services, service_name) && !contains(local.regional_services, service_name)
+    if !contains(local.independent_services, service_name)
   ])
 
   account_id        = aws_organizations_account.this.id
@@ -95,32 +93,30 @@ resource "aws_vpc_ipam_organization_admin_account" "this" {
   delegated_admin_account_id = aws_organizations_account.this.id
 }
 
-# Macie2 delegated administrator (regional service)
 resource "aws_macie2_organization_admin_account" "this" {
-  for_each = contains(local.delegated_service_names, "macie.amazonaws.com") ? toset(
-    length(local.delegated_services_map["macie.amazonaws.com"].regions) > 0
-    ? local.delegated_services_map["macie.amazonaws.com"].regions
-    : ["us-east-1"] # Default region for enablement, but can be configured for all regions
-  ) : []
+  for_each = toset(contains(local.delegated_service_names, "macie.amazonaws.com")
+    ? (length(local.delegated_services_map["macie.amazonaws.com"].regions) > 0
+      ? local.delegated_services_map["macie.amazonaws.com"].regions
+      : local.all_available_regions
+    )
+    : []
+  )
+
+  region = each.key
 
   admin_account_id = aws_organizations_account.this.id
-
-  # Note: This resource enables Macie delegation per region
-  # If regions is empty, we default to us-east-1 but the delegated account 
-  # can enable Macie in additional regions as needed
 }
 
-# Inspector2 delegated administrator (regional service)
 resource "aws_inspector2_delegated_admin_account" "this" {
-  for_each = contains(local.delegated_service_names, "inspector2.amazonaws.com") ? toset(
-    length(local.delegated_services_map["inspector2.amazonaws.com"].regions) > 0
-    ? local.delegated_services_map["inspector2.amazonaws.com"].regions
-    : ["us-east-1"] # Default region for enablement
-  ) : []
+  for_each = toset(contains(local.delegated_service_names, "inspector2.amazonaws.com")
+    ? (length(local.delegated_services_map["inspector2.amazonaws.com"].regions) > 0
+      ? local.delegated_services_map["inspector2.amazonaws.com"].regions
+      : local.all_available_regions
+    )
+    : []
+  )
+
+  region = each.key
 
   account_id = aws_organizations_account.this.id
-
-  # Note: This resource enables Inspector2 delegation per region
-  # If regions is empty, we default to us-east-1 but the delegated account
-  # can enable Inspector2 in additional regions as needed
 }

@@ -103,5 +103,4 @@ This module creates following resources.
 | <a name="output_primary_contact"></a> [primary\_contact](#output\_primary\_contact) | The primary contact attached to an AWS Account. |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | The resource group created to manage resources in this module. |
 | <a name="output_security_contact"></a> [security\_contact](#output\_security\_contact) | The security contact attached to an AWS Account. |
-| <a name="output_status"></a> [status](#output\_status) | The status of the account in the organization. |
 <!-- END_TF_DOCS -->

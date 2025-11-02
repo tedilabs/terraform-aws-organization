@@ -23,11 +23,6 @@ output "govcloud_account_id" {
   value       = aws_organizations_account.this.govcloud_id
 }
 
-output "status" {
-  description = "The status of the account in the organization."
-  value       = aws_organizations_account.this.status
-}
-
 output "parent_id" {
   description = "The ID of the parent Organizational Unit."
   value       = aws_organizations_account.this.parent_id

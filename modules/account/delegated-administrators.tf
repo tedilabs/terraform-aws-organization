@@ -36,6 +36,7 @@ locals {
 # - `compute-optimizer.amazonaws.com`
 # - `config.amazonaws.com`
 # - `config-multiaccountsetup.amazonaws.com`
+# - `cost-optimization-hub.bcm.amazonaws.com`
 # - `health.amazonaws.com`
 # - `reporting.trustedadvisor.amazonaws.com`
 # - `resource-explorer-2.amazonaws.com`

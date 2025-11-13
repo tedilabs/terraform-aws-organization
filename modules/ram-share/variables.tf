@@ -33,9 +33,9 @@ variable "principals" {
 }
 
 variable "resources" {
-  description = "(Optional) A list of the Amazon Resource Names (ARNs) of the resource to associate with the RAM Resource Share."
-  type        = list(string)
-  default     = []
+  description = "(Optional) A map of the Amazon Resource Names (ARNs) of the resource to associate with the RAM Resource Share. Each key is only used internally within Terraform code. Each value is the ARN of the resource."
+  type        = map(string)
+  default     = {}
   nullable    = false
 }
 

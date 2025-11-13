@@ -63,7 +63,7 @@ resource "aws_ram_principal_association" "this" {
 ###################################################
 
 resource "aws_ram_resource_association" "this" {
-  for_each = toset(var.resources)
+  for_each = var.resources
 
   region = var.region
 

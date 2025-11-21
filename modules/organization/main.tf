@@ -15,6 +15,12 @@ locals {
 }
 
 locals {
+  service_linked_roles = {
+    "eks.amazonaws.com" = {
+      service = "dashboard.eks.amazonaws.com"
+      name    = "AWSServiceRoleForAmazonEKSDashboard"
+    }
+  }
   individual_trusted_accesses = toset([
     # INFO: Using the IPAM `EnableIpamOrganizationAdminAccount` API, automatically grant trusted access to IPAM
     "ipam.amazonaws.com",
@@ -36,6 +42,7 @@ locals {
   # - `config-multiaccountsetup.amazonaws.com`
   # - `cost-optimization-hub.bcm.amazonaws.com`
   # - `detective.amazonaws.com`
+  # - `eks.amazonaws.com`
   # - `fms.amazonaws.com`
   # - `health.amazonaws.com`
   # - `inspector2.amazonaws.com`
@@ -115,4 +122,32 @@ resource "aws_servicecatalog_organizations_access" "this" {
 resource "aws_servicequotas_template_association" "this" {
   count        = contains(var.trusted_access_enabled_service_principals, "servicequotas.amazonaws.com") ? 1 : 0
   skip_destroy = false
+}
+
+
+###################################################
+# Service-linked IAM Roles
+###################################################
+
+module "service_linked_role" {
+  source  = "tedilabs/account/aws//modules/iam-service-linked-role"
+  version = "~> 0.33.0"
+
+  for_each = {
+    for service_principal, role in local.service_linked_roles :
+    service_principal => role
+    if contains(var.trusted_access_enabled_service_principals, service_principal)
+  }
+
+  aws_service         = each.value.service
+  description         = "Service-linked role for ${each.key} created by Terraform."
+  module_tags_enabled = false
+
+  tags = merge(
+    {
+      "Name" = each.value.name
+    },
+    local.module_tags,
+    var.tags,
+  )
 }

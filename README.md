@@ -8,6 +8,7 @@ Terraform modules to manage Organization related resources on AWS.
 
 - [account](./modules/account)
 - [organization](./modules/organization)
+- [organization-policy](./modules/organization-policy)
 - [organizational-unit](./modules/organizational-unit)
 - [ram-share](./modules/ram-share)
 - [sso-access-control-attributes](./modules/sso-access-control-attributes)
@@ -25,6 +26,7 @@ Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-
   - Permission Set
 - **AWS Organization**
   - Organization
+  - Organization Policy
   - Organization Unit
   - Account
 - **AWS RAM (Resource Access Manager)**

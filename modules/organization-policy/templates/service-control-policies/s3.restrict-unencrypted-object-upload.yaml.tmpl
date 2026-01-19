@@ -1,0 +1,15 @@
+- Effect: Deny
+  Action:
+  - s3:PutObject
+  Resource:
+  - "*"
+  Condition:
+    "Null":
+      "s3:x-amz-server-side-encryption": true
+%{ if length(permittedPrincipals) > 0 ~}
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}

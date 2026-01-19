@@ -1,0 +1,26 @@
+SERVICE_CONTROL_POLICY:
+  region/restrict-management:
+    name: region/restrict-management
+    description: Restrict principals to enable/disable additional regions.
+    file_path: templates/service-control-policies/region.restrict-management.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+
+  s3/restrict-unencrypted-object-upload:
+    name: s3/restrict-unencrypted-object-upload
+    description: Restrict principals to upload only encrypted objects to S3 buckets.
+    file_path: templates/service-control-policies/s3.restrict-unencrypted-object-upload.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []

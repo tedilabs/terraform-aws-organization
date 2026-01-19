@@ -5,9 +5,9 @@ variable "name" {
 }
 
 variable "description" {
-  description = "(Optional) The description of the Organization Policy. Defaults to `Managed by Terraform.`."
+  description = "(Optional) The description of the Organization Policy. If you are using `template`, defaults to the description defined in the template."
   type        = string
-  default     = "Managed by Terraform."
+  default     = ""
   nullable    = false
 }
 
@@ -39,9 +39,24 @@ variable "type" {
 }
 
 variable "content" {
-  description = "(Required) The policy content to add to the new policy. This is a JSON formatted string."
+  description = "(Optional) The policy content to add to the new policy. This is a JSON formatted string. If you are using `template`, this field will be ignored."
   type        = string
-  nullable    = false
+  default     = null
+  nullable    = true
+}
+
+variable "template" {
+  description = <<EOF
+  (Optional) A configurations of predefined policy templates. Only one of `content` or `template` can be specified. `template` as defined below.
+    (Required) `name` - The name of the predefined policy template.
+    (Optional) `parameters` - A map of key-value pairs to customize the policy template.
+  EOF
+  type = object({
+    name       = string
+    parameters = any
+  })
+  default  = null
+  nullable = true
 }
 
 variable "tags" {

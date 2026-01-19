@@ -22,16 +22,65 @@ locals {
 
 
 ###################################################
+# Policy Content
+###################################################
+
+locals {
+  templates = var.template != null ? yamldecode(file("${path.module}/templates.yaml")) : {}
+  template  = var.template != null ? local.templates[var.type][var.template.name] : null
+
+  policy_content = var.template != null ? terraform_data.policy[0].output : var.content
+}
+
+resource "terraform_data" "policy" {
+  count = var.template != null ? 1 : 0
+
+  input = jsonencode({
+    Version = "2012-10-17"
+    Statement = yamldecode(
+      templatefile(
+        "${path.module}/${local.template.file_path}",
+        merge({
+          for name, parameter in local.template.parameters.required :
+          name => var.template.parameters[name]
+          }, {
+          for name, parameter in local.template.parameters.optional :
+          name => try(var.template.parameters[name], parameter.default)
+        })
+      )
+    )
+  })
+
+  lifecycle {
+    precondition {
+      condition     = var.content == null
+      error_message = "Only one of `content` or `template` can be specified."
+    }
+    precondition {
+      condition = alltrue([
+        for parameter in local.template.parameters.required :
+        contains(keys(var.template.parameters), parameter)
+      ])
+      error_message = "All required parameters (${join(", ", keys(local.template.parameters.required))}) must be provided in `parameters` for the selected template `${var.template.name}`."
+    }
+  }
+}
+
+
+###################################################
 # Organization Policy
 ###################################################
 
 resource "aws_organizations_policy" "this" {
-  name         = var.name
-  description  = var.description
+  name = var.name
+  description = (var.template != null
+    ? coalesce(var.description, local.template.description)
+    : var.description
+  )
   skip_destroy = var.skip_destroy
 
   type    = var.type
-  content = var.content
+  content = local.policy_content
 
   tags = merge(
     {

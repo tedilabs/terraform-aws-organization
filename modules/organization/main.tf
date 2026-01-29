@@ -24,6 +24,8 @@ locals {
   individual_trusted_accesses = toset([
     # INFO: Using the IPAM `EnableIpamOrganizationAdminAccount` API, automatically grant trusted access to IPAM
     "ipam.amazonaws.com",
+    # INFO: Use the User Notifications `update-notification-configuration` API
+    "notifications.amazon.com",
     "ram.amazonaws.com",
     "servicecatalog.amazonaws.com",
     "servicequotas.amazonaws.com",

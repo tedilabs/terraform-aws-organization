@@ -1,0 +1,16 @@
+- Effect: Deny
+  Action:
+  - ram:CreateResourceShare
+  - ram:UpdateResourceShare
+  Resource:
+  - "*"
+  Condition:
+    "Bool":
+      "ram:RequestedAllowsExternalPrincipals": "true"
+%{ if length(permittedPrincipals) > 0 ~}
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}

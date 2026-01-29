@@ -1,4 +1,17 @@
 SERVICE_CONTROL_POLICY:
+  ram/restrict-external-sharing:
+    name: ram/restrict-external-sharing
+    description: Restrict principals to share resources only within the organization.
+    file_path: templates/service-control-policies/ram.restrict-external-sharing.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+
   region/restrict-management:
     name: region/restrict-management
     description: Restrict principals to enable/disable additional regions.

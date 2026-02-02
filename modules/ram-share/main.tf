@@ -17,7 +17,10 @@ locals {
 locals {
   permission_arns = [
     for permission in var.permissions :
-    "arn:aws:ram::aws:permission/${permission}"
+    (startswith(permission, "arn:aws:ram:")
+      ? permission
+      : "arn:aws:ram::aws:permission/${permission}"
+    )
   ]
 }
 

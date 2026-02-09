@@ -24,7 +24,6 @@ locals {
   individual_trusted_accesses = toset([
     # INFO: Using the IPAM `EnableIpamOrganizationAdminAccount` API, automatically grant trusted access to IPAM
     "ipam.amazonaws.com",
-    # INFO: Use the User Notifications `update-notification-configuration` API
     "notifications.amazon.com",
     "ram.amazonaws.com",
     "servicecatalog.amazonaws.com",
@@ -111,6 +110,12 @@ resource "aws_organizations_policy_attachment" "this" {
 # Individual Trusted Accesses
 ###################################################
 
+resource "aws_notifications_organizations_access" "this" {
+  count = contains(var.trusted_access_enabled_service_principals, "notifications.amazon.com") ? 1 : 0
+
+  enabled = true
+}
+
 resource "aws_ram_sharing_with_organization" "this" {
   count = contains(var.trusted_access_enabled_service_principals, "ram.amazonaws.com") ? 1 : 0
 }
@@ -122,7 +127,8 @@ resource "aws_servicecatalog_organizations_access" "this" {
 }
 
 resource "aws_servicequotas_template_association" "this" {
-  count        = contains(var.trusted_access_enabled_service_principals, "servicequotas.amazonaws.com") ? 1 : 0
+  count = contains(var.trusted_access_enabled_service_principals, "servicequotas.amazonaws.com") ? 1 : 0
+
   skip_destroy = false
 }
 

@@ -85,6 +85,7 @@ resource "aws_organizations_organization" "this" {
   }
 
   depends_on = [
+    aws_notifications_organizations_access.this,
     aws_ram_sharing_with_organization.this,
     aws_servicecatalog_organizations_access.this,
     aws_servicequotas_template_association.this,

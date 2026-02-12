@@ -42,6 +42,23 @@ SERVICE_CONTROL_POLICY:
           description: A set of permitted IAM principal ARNs.
           default: []
 
+  region/restrict-usage:
+    name: region/restrict-usage
+    description: Restrict principals to use specific regions.
+    file_path: templates/service-control-policies/region.restrict-usage.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+        permittedRegions:
+          type: "set(string)"
+          description: A set of permitted regions.
+          default: []
+
   s3/restrict-unencrypted-object-upload:
     name: s3/restrict-unencrypted-object-upload
     description: Restrict principals to upload only encrypted objects to S3 buckets.

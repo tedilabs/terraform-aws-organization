@@ -16,10 +16,10 @@ SERVICE_CONTROL_POLICY:
           description: A set of permitted IAM principal ARNs.
           default: []
 
-  ec2/limit-instance-types:
-    name: ec2/limit-instance-types
+  ec2/restrict-instance-types:
+    name: ec2/restrict-instance-types
     description: Restrict principals to launch only specific EC2 instance types.
-    file_path: templates/service-control-policies/ec2.limit-instance-types.yaml.tmpl
+    file_path: templates/service-control-policies/ec2.restrict-instance-types.yaml.tmpl
     enabled: true
     parameters:
       required:

@@ -58,7 +58,7 @@ resource "terraform_data" "policy" {
     }
     precondition {
       condition = alltrue([
-        for parameter in local.template.parameters.required :
+        for parameter in keys(local.template.parameters.required) :
         contains(keys(var.template.parameters), parameter)
       ])
       error_message = "All required parameters (${join(", ", keys(local.template.parameters.required))}) must be provided in `parameters` for the selected template `${var.template.name}`."

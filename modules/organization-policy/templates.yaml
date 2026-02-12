@@ -1,4 +1,21 @@
 SERVICE_CONTROL_POLICY:
+  account/restrict-services:
+    name: account/restrict-services
+    description: Restrict principals to use specific AWS services.
+    file_path: templates/service-control-policies/account.restrict-services.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+        restrictedServices:
+          type: "set(string)"
+          description: A set of restricted AWS service names (e.g., "ec2", "gamelift", "groundstation").
+          default: []
+
   ram/restrict-external-sharing:
     name: ram/restrict-external-sharing
     description: Restrict principals to share resources only within the organization.

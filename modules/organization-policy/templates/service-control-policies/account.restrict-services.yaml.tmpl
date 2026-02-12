@@ -1,0 +1,17 @@
+- Effect: Deny
+  Action:
+%{ if length(restrictedServices) > 0 ~}
+%{ for service in restrictedServices ~}
+  - ${service}:*
+%{ endfor ~}
+%{ endif ~}
+  Resource:
+  - "*"
+%{ if length(permittedPrincipals) > 0 ~}
+  Condition:
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}

@@ -5,15 +5,45 @@ SERVICE_CONTROL_POLICY:
     file_path: templates/service-control-policies/account.restrict-services.yaml.tmpl
     enabled: true
     parameters:
-      required: {}
+      required:
+        restrictedServices:
+          type: "set(string)"
+          description: A set of restricted AWS service names (e.g., "ec2", "gamelift", "groundstation").
+          default: []
       optional:
         permittedPrincipals:
           type: "set(string)"
           description: A set of permitted IAM principal ARNs.
           default: []
-        restrictedServices:
+
+  ec2/limit-instance-types:
+    name: ec2/limit-instance-types
+    description: Restrict principals to launch only specific EC2 instance types.
+    file_path: templates/service-control-policies/ec2.limit-instance-types.yaml.tmpl
+    enabled: true
+    parameters:
+      required:
+        permittedInstanceTypes:
           type: "set(string)"
-          description: A set of restricted AWS service names (e.g., "ec2", "gamelift", "groundstation").
+          description: A set of permitted EC2 instance types. (e.g., "t3.micro", "m5.large").
+          default: []
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+
+  organization/restrict-leaving:
+    name: organization/restrict-leaving
+    description: Restrict principals from removing accounts from the organization.
+    file_path: templates/service-control-policies/organization.restrict-leaving.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
           default: []
 
   ram/restrict-external-sharing:
@@ -48,7 +78,11 @@ SERVICE_CONTROL_POLICY:
     file_path: templates/service-control-policies/region.restrict-usage.yaml.tmpl
     enabled: true
     parameters:
-      required: {}
+      required:
+        permittedRegions:
+          type: "set(string)"
+          description: A set of permitted regions.
+          default: []
       optional:
         permittedActions:
           type: "set(string)"
@@ -57,10 +91,6 @@ SERVICE_CONTROL_POLICY:
         permittedPrincipals:
           type: "set(string)"
           description: A set of permitted IAM principal ARNs.
-          default: []
-        permittedRegions:
-          type: "set(string)"
-          description: A set of permitted regions.
           default: []
 
   s3/restrict-unencrypted-object-upload:

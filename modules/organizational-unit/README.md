@@ -17,7 +17,7 @@ This module creates following resources.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.12.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.32.0 |
 
 ## Modules
 
@@ -40,7 +40,7 @@ This module creates following resources.
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the Organizational Unit. | `string` | n/a | yes |
 | <a name="input_module_tags_enabled"></a> [module\_tags\_enabled](#input\_module\_tags\_enabled) | (Optional) Whether to create AWS Resource Tags for the module informations. | `bool` | `true` | no |
 | <a name="input_parent_id"></a> [parent\_id](#input\_parent\_id) | (Optional) The ID of the parent organizational unit, which may be the root. | `string` | `null` | no |
-| <a name="input_policies"></a> [policies](#input\_policies) | (Optional) List of IDs of the policies to be attached to the Organizational Unit. | `list(string)` | `[]` | no |
+| <a name="input_policies"></a> [policies](#input\_policies) | (Optional) A map of policies to be attached to the Organization Unit. Each key is only used internally within Terraform code. Each value is the ID of the policy to  be attached. | `map(string)` | `{}` | no |
 | <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group) | (Optional) A configurations of Resource Group for this module. `resource_group` as defined below.<br/>    (Optional) `enabled` - Whether to create Resource Group to find and group AWS resources which are created by this module. Defaults to `true`.<br/>    (Optional) `name` - The name of Resource Group. A Resource Group name can have a maximum of 127 characters, including letters, numbers, hyphens, dots, and underscores. The name cannot start with `AWS` or `aws`. If not provided, a name will be generated using the module name and instance name.<br/>    (Optional) `description` - The description of Resource Group. Defaults to `Managed by Terraform.`. | <pre>object({<br/>    enabled     = optional(bool, true)<br/>    name        = optional(string, "")<br/>    description = optional(string, "Managed by Terraform.")<br/>  })</pre> | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) A map of tags to add to all resources. | `map(string)` | `{}` | no |
 
@@ -53,5 +53,6 @@ This module creates following resources.
 | <a name="output_id"></a> [id](#output\_id) | The ID of the Organizational Unit. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the Organizational Unit. |
 | <a name="output_parent_id"></a> [parent\_id](#output\_parent\_id) | The ID of the parent Organizational Unit. |
+| <a name="output_policies"></a> [policies](#output\_policies) | A set of policy IDs attached to the Organization Unit. |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | The resource group created to manage resources in this module. |
 <!-- END_TF_DOCS -->

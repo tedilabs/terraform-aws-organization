@@ -23,6 +23,11 @@ output "accounts" {
   value       = aws_organizations_organizational_unit.this.accounts
 }
 
+output "policies" {
+  description = "A set of policy IDs attached to the Organization Unit."
+  value       = values(aws_organizations_policy_attachment.this)[*].policy_id
+}
+
 output "resource_group" {
   description = "The resource group created to manage resources in this module."
   value = merge(

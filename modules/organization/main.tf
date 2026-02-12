@@ -98,10 +98,10 @@ resource "aws_organizations_organization" "this" {
 ###################################################
 
 resource "aws_organizations_policy_attachment" "this" {
-  for_each = toset(var.policies)
+  for_each = var.policies
 
   target_id = aws_organizations_organization.this.roots[0].id
-  policy_id = each.key
+  policy_id = each.value
 
   skip_destroy = false
 }

@@ -42,6 +42,9 @@
   - waf:*
   - wafv2:*
   - wellarchitected:*
+%{ for action in permittedActions ~}
+  - ${action}
+%{ endfor ~}
   Resource:
   - "*"
   Condition:

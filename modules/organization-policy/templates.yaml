@@ -50,6 +50,10 @@ SERVICE_CONTROL_POLICY:
     parameters:
       required: {}
       optional:
+        permittedActions:
+          type: "set(string)"
+          description: A set of permitted actions.
+          default: []
         permittedPrincipals:
           type: "set(string)"
           description: A set of permitted IAM principal ARNs.

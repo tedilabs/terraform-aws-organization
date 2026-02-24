@@ -93,10 +93,7 @@ resource "aws_vpc_ipam_organization_admin_account" "this" {
 
 resource "aws_guardduty_organization_admin_account" "this" {
   for_each = toset(contains(local.delegated_service_names, "guardduty.amazonaws.com")
-    ? (length(local.delegated_services_map["guardduty.amazonaws.com"].regions) > 0
-      ? local.delegated_services_map["guardduty.amazonaws.com"].regions
-      : local.all_available_regions
-    )
+    ? local.delegated_services_map["guardduty.amazonaws.com"].regions
     : []
   )
 
@@ -107,10 +104,7 @@ resource "aws_guardduty_organization_admin_account" "this" {
 
 resource "aws_macie2_organization_admin_account" "this" {
   for_each = toset(contains(local.delegated_service_names, "macie.amazonaws.com")
-    ? (length(local.delegated_services_map["macie.amazonaws.com"].regions) > 0
-      ? local.delegated_services_map["macie.amazonaws.com"].regions
-      : local.all_available_regions
-    )
+    ? local.delegated_services_map["macie.amazonaws.com"].regions
     : []
   )
 
@@ -121,10 +115,7 @@ resource "aws_macie2_organization_admin_account" "this" {
 
 resource "aws_inspector2_delegated_admin_account" "this" {
   for_each = toset(contains(local.delegated_service_names, "inspector2.amazonaws.com")
-    ? (length(local.delegated_services_map["inspector2.amazonaws.com"].regions) > 0
-      ? local.delegated_services_map["inspector2.amazonaws.com"].regions
-      : local.all_available_regions
-    )
+    ? local.delegated_services_map["inspector2.amazonaws.com"].regions
     : []
   )
 

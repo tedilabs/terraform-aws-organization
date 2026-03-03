@@ -114,9 +114,9 @@ variable "permissions_boundary" {
   }
   validation {
     condition = (var.permissions_boundary != null
-      ? alltrue([
-        var.permissions_boundary.type == "AWS_MANAGED",
-        var.permissions_boundary.arn != null
+      ? anytrue([
+        var.permissions_boundary.type == "CUSTOMER_MANAGED",
+        var.permissions_boundary.type == "AWS_MANAGED" && var.permissions_boundary.arn != null
       ])
       : true
     )
@@ -124,9 +124,9 @@ variable "permissions_boundary" {
   }
   validation {
     condition = (var.permissions_boundary != null
-      ? alltrue([
-        var.permissions_boundary.type == "CUSTOMER_MANAGED",
-        var.permissions_boundary.name != null
+      ? anytrue([
+        var.permissions_boundary.type == "AWS_MANAGED",
+        var.permissions_boundary.type == "CUSTOMER_MANAGED" && var.permissions_boundary.name != null
       ])
       : true
     )

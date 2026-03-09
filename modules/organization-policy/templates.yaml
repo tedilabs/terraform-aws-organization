@@ -1,3 +1,21 @@
+AISERVICES_OPT_OUT_POLICY: {}
+
+
+BACKUP_POLICY: {}
+
+
+CHATBOT_POLICY: {}
+
+
+DECLARATIVE_POLICY_EC2: {}
+
+
+RESOURCE_CONTROL_POLICY: {}
+
+
+SECURITYHUB_POLICY: {}
+
+
 SERVICE_CONTROL_POLICY:
   account/restrict-services:
     name: account/restrict-services
@@ -135,3 +153,6 @@ SERVICE_CONTROL_POLICY:
           type: "set(string)"
           description: A set of permitted IAM principal ARNs.
           default: []
+
+
+TAG_POLICY: {}

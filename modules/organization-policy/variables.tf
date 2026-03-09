@@ -5,9 +5,9 @@ variable "name" {
 }
 
 variable "description" {
-  description = "(Optional) The description of the Organization Policy. If you are using `template`, defaults to the description defined in the template."
+  description = "(Optional) The description of the Organization Policy. Defaults to `Managed by Terraform.`."
   type        = string
-  default     = ""
+  default     = "Managed by Terraform."
   nullable    = false
 }
 
@@ -38,25 +38,57 @@ variable "type" {
   }
 }
 
-variable "content" {
-  description = "(Optional) The policy content to add to the new policy. This is a JSON formatted string. If you are using `template`, this field will be ignored."
-  type        = string
-  default     = null
-  nullable    = true
-}
-
-variable "template" {
+variable "policies" {
   description = <<EOF
-  (Optional) A configurations of predefined policy templates. Only one of `content` or `template` can be specified. `template` as defined below.
-    (Required) `name` - The name of the predefined policy template.
-    (Optional) `parameters` - A map of key-value pairs to customize the policy template.
+  (Required) A list of policy configurations to be combined into a single organization policy. Each policy can be either inline JSON content or a predefined template. Each item of `policies` as defined below.
+    (Required) `type` - The type of the policy. Valid values are `INLINE`, `TEMPLATE`.
+    (Optional) `content` - The policy content in JSON format. Required if `type` is `INLINE`.
+    (Optional) `template` - A configuration for predefined policy template. Required if `type` is `TEMPLATE`. `template` as defined below.
+      (Required) `name` - The name of the predefined policy template.
+      (Optional) `parameters` - A map of key-value pairs to customize the policy template.
   EOF
-  type = object({
-    name       = string
-    parameters = any
-  })
-  default  = null
-  nullable = true
+  type        = any
+  nullable    = false
+
+  validation {
+    condition     = can(length(var.policies))
+    error_message = "The `policies` variable must be a list."
+  }
+  validation {
+    condition = alltrue([
+      for policy in var.policies :
+      can(policy.type)
+    ])
+    error_message = "Each policy in `policies` must have a `type` field."
+  }
+  validation {
+    condition = alltrue([
+      for policy in var.policies :
+      contains(["INLINE", "TEMPLATE"], policy.type)
+    ])
+    error_message = "Valid values for `type` in each policy are `INLINE`, `TEMPLATE`."
+  }
+  validation {
+    condition = alltrue([
+      for policy in var.policies :
+      policy.type != "INLINE" || can(policy.content)
+    ])
+    error_message = "Each policy with `type` = `INLINE` must have a `content` field."
+  }
+  validation {
+    condition = alltrue([
+      for policy in var.policies :
+      policy.type != "TEMPLATE" || can(policy.template)
+    ])
+    error_message = "Each policy with `type` = `TEMPLATE` must have a `template` field."
+  }
+  validation {
+    condition = alltrue([
+      for policy in var.policies :
+      policy.type != "TEMPLATE" || can(policy.template.name)
+    ])
+    error_message = "Each policy with `type` = `TEMPLATE` must have a `template.name` field."
+  }
 }
 
 variable "tags" {

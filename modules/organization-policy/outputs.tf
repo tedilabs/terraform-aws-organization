@@ -28,6 +28,11 @@ output "type" {
 #   value       = aws_organizations_policy.this.content
 # }
 
+output "document_size" {
+  description = "The size of the Organization Policy document in bytes."
+  value       = length(aws_organizations_policy.this.content)
+}
+
 output "resource_group" {
   description = "The resource group created to manage resources in this module."
   value = merge(

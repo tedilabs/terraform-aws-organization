@@ -14,56 +14,59 @@ locals {
   } : {}
 }
 
-data "aws_organizations_organization" "this" {}
-
-locals {
-  organization_root_id = data.aws_organizations_organization.this.roots[0].id
-}
-
 
 ###################################################
 # Policy Content
 ###################################################
 
 locals {
-  templates = var.template != null ? yamldecode(file("${path.module}/templates.yaml")) : {}
-  template  = var.template != null ? local.templates[var.type][var.template.name] : null
-
-  policy_content = var.template != null ? terraform_data.policy[0].output : var.content
+  templates = yamldecode(file("${path.module}/templates.yaml"))[var.type]
 }
 
-resource "terraform_data" "policy" {
-  count = var.template != null ? 1 : 0
+resource "terraform_data" "policies" {
+  for_each = {
+    for idx, policy in var.policies :
+    idx => policy
+  }
 
-  input = jsonencode({
-    Version = "2012-10-17"
-    Statement = yamldecode(
-      templatefile(
-        "${path.module}/${local.template.file_path}",
-        merge({
-          for name, parameter in local.template.parameters.required :
-          name => var.template.parameters[name]
-          }, {
-          for name, parameter in local.template.parameters.optional :
-          name => try(var.template.parameters[name], parameter.default)
-        })
+  input = (each.value.type == "TEMPLATE"
+    ? jsonencode({
+      Version = "2012-10-17"
+      Statement = yamldecode(
+        templatefile(
+          "${path.module}/${local.templates[each.value.template.name].file_path}",
+          merge(
+            {
+              for name, parameter in local.templates[each.value.template.name].parameters.required :
+              name => each.value.template.parameters[name]
+            },
+            {
+              for name, parameter in local.templates[each.value.template.name].parameters.optional :
+              name => try(each.value.template.parameters[name], parameter.default)
+            }
+          )
+        )
       )
-    )
-  })
+    })
+    : (each.value.type == "INLINE" ? each.value.content : "error")
+  )
 
   lifecycle {
     precondition {
-      condition     = var.content == null
-      error_message = "Only one of `content` or `template` can be specified."
-    }
-    precondition {
-      condition = alltrue([
-        for parameter in keys(local.template.parameters.required) :
-        contains(keys(var.template.parameters), parameter)
+      condition = each.value.type != "TEMPLATE" || alltrue([
+        for parameter in keys(local.templates[each.value.template.name].parameters.required) :
+        contains(keys(each.value.template.parameters), parameter)
       ])
-      error_message = "All required parameters (${join(", ", keys(local.template.parameters.required))}) must be provided in `parameters` for the selected template `${var.template.name}`."
+      error_message = "All required parameters must be provided in `parameters` for the selected template."
     }
   }
+}
+
+data "aws_iam_policy_document" "combined" {
+  source_policy_documents = [
+    for idx, policy in terraform_data.policies :
+    policy.output
+  ]
 }
 
 
@@ -72,15 +75,12 @@ resource "terraform_data" "policy" {
 ###################################################
 
 resource "aws_organizations_policy" "this" {
-  name = var.name
-  description = (var.template != null
-    ? coalesce(var.description, local.template.description)
-    : var.description
-  )
+  name         = var.name
+  description  = var.description
   skip_destroy = var.skip_destroy
 
   type    = var.type
-  content = local.policy_content
+  content = data.aws_iam_policy_document.combined.minified_json
 
   tags = merge(
     {

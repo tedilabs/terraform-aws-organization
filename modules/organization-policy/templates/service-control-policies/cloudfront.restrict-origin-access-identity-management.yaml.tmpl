@@ -1,0 +1,15 @@
+- Effect: Deny
+  Action:
+  - cloudfront:CreateCloudFrontOriginAccessIdentity
+  - cloudfront:DeleteCloudFrontOriginAccessIdentity
+  - cloudfront:UpdateCloudFrontOriginAccessIdentity
+  Resource:
+  - "*"
+%{ if length(permittedPrincipals) > 0 ~}
+  Condition:
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}

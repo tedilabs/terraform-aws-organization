@@ -16,6 +16,19 @@ SERVICE_CONTROL_POLICY:
           description: A set of permitted IAM principal ARNs.
           default: []
 
+  cloudfront/restrict-origin-access-identity-management:
+    name: cloudfront/restrict-origin-access-identity-management
+    description: Restrict principals to manage CloudFront origin access identities.
+    file_path: templates/service-control-policies/cloudfront.restrict-origin-access-identity-management.yaml.tmpl
+    enabled: true
+    parameters:
+      required: {}
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+
   ec2/restrict-instance-types:
     name: ec2/restrict-instance-types
     description: Restrict principals to launch only specific EC2 instance types.

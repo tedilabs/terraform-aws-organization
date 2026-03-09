@@ -5,7 +5,7 @@
   - "*"
   Condition:
     "Null":
-      "s3:x-amz-server-side-encryption": true
+      "s3:x-amz-server-side-encryption": "true"
 %{ if length(permittedPrincipals) > 0 ~}
     ArnNotLike:
       "aws:PrincipalARN":

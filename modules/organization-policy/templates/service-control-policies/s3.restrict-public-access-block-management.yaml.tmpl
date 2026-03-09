@@ -1,0 +1,34 @@
+- Effect: Deny
+  Action:
+  - s3:PutBucketPublicAccessBlock
+  Resource:
+  - "*"
+  Condition:
+    "StringNotEquals":
+      "s3:PublicAccessBlockConfiguration/BlockPublicAcls": "true"
+      "s3:PublicAccessBlockConfiguration/BlockPublicPolicy": "true"
+      "s3:PublicAccessBlockConfiguration/IgnorePublicAcls": "true"
+      "s3:PublicAccessBlockConfiguration/RestrictPublicBuckets": "true"
+%{ if length(permittedPrincipals) > 0 ~}
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}
+
+%{ if restrictAccountLevelPublicAccessBlockManagement ~}
+- Effect: Deny
+  Action:
+  - s3:PutAccountPublicAccessBlock
+  Resource:
+  - "*"
+%{ if length(permittedPrincipals) > 0 ~}
+  Condition:
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}
+%{ endif ~}

@@ -3,13 +3,8 @@
   - s3:PutBucketPublicAccessBlock
   Resource:
   - "*"
-  Condition:
-    "StringNotEquals":
-      "s3:PublicAccessBlockConfiguration/BlockPublicAcls": "true"
-      "s3:PublicAccessBlockConfiguration/BlockPublicPolicy": "true"
-      "s3:PublicAccessBlockConfiguration/IgnorePublicAcls": "true"
-      "s3:PublicAccessBlockConfiguration/RestrictPublicBuckets": "true"
 %{ if length(permittedPrincipals) > 0 ~}
+  Condition:
     ArnNotLike:
       "aws:PrincipalARN":
 %{ for principal in permittedPrincipals ~}

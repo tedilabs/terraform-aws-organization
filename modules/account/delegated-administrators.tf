@@ -14,6 +14,7 @@ locals {
     "guardduty.amazonaws.com",
     "inspector2.amazonaws.com",
     "macie.amazonaws.com",
+    "securityhub.amazonaws.com",
   ]
 
   # Transform delegated_services to a map for easier lookup
@@ -79,12 +80,6 @@ resource "aws_fms_admin_account" "this" {
   account_id = aws_organizations_account.this.id
 }
 
-resource "aws_securityhub_organization_admin_account" "this" {
-  count = contains(local.delegated_service_names, "securityhub.amazonaws.com") ? 1 : 0
-
-  admin_account_id = aws_organizations_account.this.id
-}
-
 resource "aws_vpc_ipam_organization_admin_account" "this" {
   count = contains(local.delegated_service_names, "ipam.amazonaws.com") ? 1 : 0
 
@@ -102,6 +97,17 @@ resource "aws_guardduty_organization_admin_account" "this" {
   admin_account_id = aws_organizations_account.this.id
 }
 
+resource "aws_inspector2_delegated_admin_account" "this" {
+  for_each = toset(contains(local.delegated_service_names, "inspector2.amazonaws.com")
+    ? local.delegated_services_map["inspector2.amazonaws.com"].regions
+    : []
+  )
+
+  region = each.key
+
+  account_id = aws_organizations_account.this.id
+}
+
 resource "aws_macie2_organization_admin_account" "this" {
   for_each = toset(contains(local.delegated_service_names, "macie.amazonaws.com")
     ? local.delegated_services_map["macie.amazonaws.com"].regions
@@ -113,13 +119,13 @@ resource "aws_macie2_organization_admin_account" "this" {
   admin_account_id = aws_organizations_account.this.id
 }
 
-resource "aws_inspector2_delegated_admin_account" "this" {
-  for_each = toset(contains(local.delegated_service_names, "inspector2.amazonaws.com")
-    ? local.delegated_services_map["inspector2.amazonaws.com"].regions
+resource "aws_securityhub_organization_admin_account" "this" {
+  for_each = toset(contains(local.delegated_service_names, "securityhub.amazonaws.com")
+    ? local.delegated_services_map["securityhub.amazonaws.com"].regions
     : []
   )
 
   region = each.key
 
-  account_id = aws_organizations_account.this.id
+  admin_account_id = aws_organizations_account.this.id
 }

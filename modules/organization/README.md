@@ -3,6 +3,7 @@
 This module creates following resources.
 
 - `aws_organizations_organization`
+- `aws_organizations_aws_service_access` (optional)
 - `aws_organizations_policy_attachment` (optional)
 - `aws_notifications_organizations_access` (optional)
 - `aws_ram_sharing_with_organization` (optional)
@@ -15,13 +16,13 @@ This module creates following resources.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.29 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.39 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.30.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.39.0 |
 
 ## Modules
 
@@ -35,6 +36,7 @@ This module creates following resources.
 | Name | Type |
 |------|------|
 | [aws_notifications_organizations_access.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/notifications_organizations_access) | resource |
+| [aws_organizations_aws_service_access.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_aws_service_access) | resource |
 | [aws_organizations_organization.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_organization) | resource |
 | [aws_organizations_policy_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_policy_attachment) | resource |
 | [aws_ram_sharing_with_organization.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_sharing_with_organization) | resource |

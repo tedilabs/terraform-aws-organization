@@ -66,12 +66,11 @@ locals {
 # Organization
 ###################################################
 
+# INFO: Not supported attributes
+# - 'aws_service_access_principals' (Use individual resources for trusted access instead)
 resource "aws_organizations_organization" "this" {
   feature_set          = var.all_features_enabled ? "ALL" : "CONSOLIDATED_BILLING"
   enabled_policy_types = var.enabled_policy_types
-
-  # aws_service_access_principals = local.organization_managed_trusted_accesses
-  aws_service_access_principals = var.trusted_access_enabled_service_principals
 
   lifecycle {
     precondition {
@@ -82,14 +81,10 @@ resource "aws_organizations_organization" "this" {
       condition     = !(length(var.enabled_policy_types) > 0) || var.all_features_enabled
       error_message = "Policy Types must be enabled when all features are enabled."
     }
+    ignore_changes = [
+      aws_service_access_principals,
+    ]
   }
-
-  depends_on = [
-    aws_notifications_organizations_access.this,
-    aws_ram_sharing_with_organization.this,
-    aws_servicecatalog_organizations_access.this,
-    aws_servicequotas_template_association.this,
-  ]
 }
 
 
@@ -104,6 +99,17 @@ resource "aws_organizations_policy_attachment" "this" {
   policy_id = each.value
 
   skip_destroy = false
+}
+
+
+###################################################
+# Organization-Managed Trusted Accesses
+###################################################
+
+resource "aws_organizations_aws_service_access" "this" {
+  for_each = local.organization_managed_trusted_accesses
+
+  service_principal = each.key
 }
 
 

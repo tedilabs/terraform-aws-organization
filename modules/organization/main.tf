@@ -14,6 +14,8 @@ locals {
   } : {}
 }
 
+data "aws_default_tags" "this" {}
+
 locals {
   service_linked_roles = {
     "eks.amazonaws.com" = {
@@ -61,6 +63,22 @@ locals {
   )
 }
 
+locals {
+  tags = merge(
+    {
+      "Name" = local.metadata.name
+    },
+    local.module_tags,
+    var.tags,
+  )
+  default_tags = data.aws_default_tags.this.tags
+
+  indirect_managed_tags = merge(
+    local.tags,
+    local.default_tags,
+  )
+}
+
 
 ###################################################
 # Organization
@@ -85,6 +103,17 @@ resource "aws_organizations_organization" "this" {
       aws_service_access_principals,
     ]
   }
+}
+
+resource "aws_organizations_tag" "this" {
+  for_each = {
+    for key, value in local.indirect_managed_tags :
+    key => value
+  }
+
+  resource_id = aws_organizations_organization.this.roots[0].id
+  key         = each.key
+  value       = each.value
 }
 
 

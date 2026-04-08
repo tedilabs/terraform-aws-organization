@@ -17,6 +17,23 @@ SECURITYHUB_POLICY: {}
 
 
 SERVICE_CONTROL_POLICY:
+  account/restrict-actions:
+    name: account/restrict-actions
+    description: Restrict principals to use specific AWS actions.
+    file_path: templates/service-control-policies/account.restrict-actions.yaml.tmpl
+    enabled: true
+    parameters:
+      required:
+        restrictedActions:
+          type: "set(string)"
+          description: A set of restricted AWS action names (e.g., "ec2:RunInstances", "gamelift:CreateFleet", "groundstation:CreateConfig").
+          default: []
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+
   account/restrict-services:
     name: account/restrict-services
     description: Restrict principals to use specific AWS services.

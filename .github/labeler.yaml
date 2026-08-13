@@ -19,10 +19,10 @@
   - any-glob-to-any-file:
     - modules/ram-share/**/*
 
-":floppy_disk: sso-access-control-attributes":
+":floppy_disk: sso-instance":
 - changed-files:
   - any-glob-to-any-file:
-    - modules/sso-access-control-attributes/**/*
+    - modules/sso-instance/**/*
 
 ":floppy_disk: sso-account-assignments":
 - changed-files:

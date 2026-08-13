@@ -11,7 +11,7 @@ Terraform modules to manage Organization related resources on AWS.
 - [organization-policy](./modules/organization-policy)
 - [organizational-unit](./modules/organizational-unit)
 - [ram-share](./modules/ram-share)
-- [sso-access-control-attributes](./modules/sso-access-control-attributes)
+- [sso-instance](./modules/sso-instance)
 - [sso-account-assignment](./modules/sso-account-assignment)
 - [sso-permission-set](./modules/sso-permission-set)
 
@@ -21,6 +21,7 @@ Terraform modules to manage Organization related resources on AWS.
 Terraform Modules from [this package](https://github.com/tedilabs/terraform-aws-organization) were written to manage the following AWS Services with Terraform.
 
 - **AWS IAM Identity Center (AWS SSO)**
+  - Instance
   - Access Control Attributes
   - Account Assignment
   - Permission Set

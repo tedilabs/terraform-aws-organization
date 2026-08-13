@@ -44,6 +44,23 @@ output "access_control_attributes_status" {
   value       = one(aws_ssoadmin_instance_access_control_attributes.this[*].status)
 }
 
+output "trusted_token_issuers" {
+  description = "A map of IAM Identity Center Trusted Token Issuers."
+  value = {
+    for name, issuer in aws_ssoadmin_trusted_token_issuer.this :
+    name => {
+      arn  = issuer.arn
+      name = issuer.name
+      oidc_jwt = {
+        claim_attribute_path          = issuer.trusted_token_issuer_configuration[0].oidc_jwt_configuration[0].claim_attribute_path
+        identity_store_attribute_path = issuer.trusted_token_issuer_configuration[0].oidc_jwt_configuration[0].identity_store_attribute_path
+        issuer_url                    = issuer.trusted_token_issuer_configuration[0].oidc_jwt_configuration[0].issuer_url
+        jwks_retrieval_option         = issuer.trusted_token_issuer_configuration[0].oidc_jwt_configuration[0].jwks_retrieval_option
+      }
+    }
+  }
+}
+
 
 output "resource_group" {
   description = "The resource group created to manage resources in this module."

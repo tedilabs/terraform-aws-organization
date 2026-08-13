@@ -25,6 +25,31 @@ variable "additional_regions" {
   nullable    = false
 }
 
+variable "trusted_token_issuers" {
+  description = <<EOF
+  (Optional) A list of IAM Identity Center Trusted Token Issuers. `trusted_token_issuers` block as defined below.
+    (Required) `name` - The trusted token issuer name.
+    (Required) `oidc_jwt` - OIDC JWT configuration.
+      (Required) `claim_attribute_path` - The path of the source attribute in the JWT from the trusted token issuer.
+      (Required) `identity_store_attribute_path` - The path of the destination attribute in a JWT from IAM Identity Center. The attribute mapped by this JMESPath expression is compared against the attribute mapped by `claim_attribute_path` when a trusted token issuer token is exchanged for an IAM Identity Center token.
+      (Required) `issuer_url` - The URL that IAM Identity Center uses for OpenID Discovery. OpenID Discovery is used to obtain the information required to verify the tokens that the trusted token issuer generates.
+      (Optional) `jwks_retrieval_option` - The method that the trusted token issuer can use to retrieve the JSON Web Key Set used to verify a JWT. Valid values are `OPEN_ID_DISCOVERY`. Defaults to `OPEN_ID_DISCOVERY`.
+    (Optional) `tags` - A map of tags to add to the trusted token issuer.
+  EOF
+  type = list(object({
+    name = string
+    oidc_jwt = object({
+      claim_attribute_path          = string
+      identity_store_attribute_path = string
+      issuer_url                    = string
+      jwks_retrieval_option         = optional(string, "OPEN_ID_DISCOVERY")
+    })
+    tags = optional(map(string), {})
+  }))
+  default  = []
+  nullable = false
+}
+
 variable "tags" {
   description = "(Optional) A map of tags to add to all resources."
   type        = map(string)

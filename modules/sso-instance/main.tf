@@ -82,3 +82,42 @@ resource "aws_ssoadmin_region" "this" {
   instance_arn = local.sso_instance_arn
   region_name  = each.value
 }
+
+
+###################################################
+# Trusted Token Issuers for AWS SSO
+###################################################
+
+# INFO: Not supported attributes
+# - 'client_token'
+resource "aws_ssoadmin_trusted_token_issuer" "this" {
+  for_each = {
+    for issuer in var.trusted_token_issuers :
+    issuer.name => issuer
+  }
+
+  region = var.region
+
+  instance_arn = local.sso_instance_arn
+
+  name                      = each.value.name
+  trusted_token_issuer_type = "OIDC_JWT"
+
+  trusted_token_issuer_configuration {
+    oidc_jwt_configuration {
+      claim_attribute_path          = each.value.oidc_jwt.claim_attribute_path
+      identity_store_attribute_path = each.value.oidc_jwt.identity_store_attribute_path
+      issuer_url                    = each.value.oidc_jwt.issuer_url
+      jwks_retrieval_option         = each.value.oidc_jwt.jwks_retrieval_option
+    }
+  }
+
+  tags = merge(
+    {
+      "Name" = each.value.name
+    },
+    local.module_tags,
+    var.tags,
+    each.value.tags,
+  )
+}

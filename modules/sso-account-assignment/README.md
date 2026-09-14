@@ -8,15 +8,15 @@ This module creates following resources.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.13.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.12 |
 
 ## Modules
 
@@ -25,7 +25,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_ssoadmin_account_assignment.groups](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_account_assignment) | resource |
 | [aws_ssoadmin_account_assignment.users](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_account_assignment) | resource |
 | [aws_identitystore_group.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/identitystore_group) | data source |
@@ -36,7 +36,7 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_account_id"></a> [account\_id](#input\_account\_id) | (Required) The identifier of an AWS account which the assignment willb e created. Typically a 10-12 digit string. | `string` | n/a | yes |
 | <a name="input_permission_set_arn"></a> [permission\_set\_arn](#input\_permission\_set\_arn) | (Required) The ARN of the Permission Set that the admin wants to grant the principal access to. | `string` | n/a | yes |
 | <a name="input_groups"></a> [groups](#input\_groups) | (Optional) A set of names of Group entities who can access to the Permission Set. | `set(string)` | `[]` | no |
@@ -47,7 +47,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | The identifier of an AWS account. |
 | <a name="output_group_assignments"></a> [group\_assignments](#output\_group\_assignments) | A set of groups who can access to the Permission Set. |
 | <a name="output_identity_store_id"></a> [identity\_store\_id](#output\_identity\_store\_id) | The ID of SSO Identity Store. |

@@ -9,6 +9,11 @@
   - any-glob-to-any-file:
     - modules/organization/**/*
 
+":floppy_disk: organization-policy":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/organization-policy/**/*
+
 ":floppy_disk: organizational-unit":
 - changed-files:
   - any-glob-to-any-file:
@@ -19,15 +24,15 @@
   - any-glob-to-any-file:
     - modules/ram-share/**/*
 
+":floppy_disk: sso-account-assignment":
+- changed-files:
+  - any-glob-to-any-file:
+    - modules/sso-account-assignment/**/*
+
 ":floppy_disk: sso-instance":
 - changed-files:
   - any-glob-to-any-file:
     - modules/sso-instance/**/*
-
-":floppy_disk: sso-account-assignments":
-- changed-files:
-  - any-glob-to-any-file:
-    - modules/sso-account-assignments/**/*
 
 ":floppy_disk: sso-permission-set":
 - changed-files:

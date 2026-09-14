@@ -44,8 +44,8 @@ trusted_token_issuers = [
 
 | Name | Version |
 | ---- | ------- |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.59.0 |
-| <a name="provider_awscc"></a> [awscc](#provider\_awscc) | 1.97.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.54 |
+| <a name="provider_awscc"></a> [awscc](#provider\_awscc) | >= 1.85 |
 
 ## Modules
 
@@ -89,5 +89,5 @@ trusted_token_issuers = [
 | <a name="output_region"></a> [region](#output\_region) | The AWS region this module resources resides in. |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | The resource group created to manage resources in this module. |
 | <a name="output_status"></a> [status](#output\_status) | The status of the SSO Instance. |
-| <a name="output_trusted_token_issuers"></a> [trusted\_token\_issuers](#output\_trusted\_token\_issuers) | A list of IAM Identity Center Trusted Token Issuers. |
+| <a name="output_trusted_token_issuers"></a> [trusted\_token\_issuers](#output\_trusted\_token\_issuers) | A map of IAM Identity Center Trusted Token Issuers. |
 <!-- END_TF_DOCS -->

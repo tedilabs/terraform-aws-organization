@@ -15,27 +15,27 @@ This module creates following resources.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.39 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.39.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.39 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | tedilabs/misc/aws//modules/resource-group | ~> 0.12.0 |
 | <a name="module_service_linked_role"></a> [service\_linked\_role](#module\_service\_linked\_role) | tedilabs/account/aws//modules/iam-service-linked-role | ~> 0.33.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_notifications_organizations_access.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/notifications_organizations_access) | resource |
 | [aws_organizations_aws_service_access.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_aws_service_access) | resource |
 | [aws_organizations_organization.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_organization) | resource |
@@ -49,7 +49,7 @@ This module creates following resources.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the Organization. | `string` | n/a | yes |
 | <a name="input_all_features_enabled"></a> [all\_features\_enabled](#input\_all\_features\_enabled) | (Optional) Whether to create AWS Organization with all features or only consolidated billing feature. Defaults to `true`. | `bool` | `true` | no |
 | <a name="input_enabled_policy_types"></a> [enabled\_policy\_types](#input\_enabled\_policy\_types) | (Optional) A set of Organizations Policy types to enable in the Organization Root. Organization must enable all features. Valid values are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `BEDROCK_POLICY`, `CHATBOT_POLICY`, `DECLARATIVE_POLICY_EC2`, `INSPECTOR_POLICY`, `NETWORK_SECURITY_DIRECTOR_POLICY`, `RESOURCE_CONTROL_POLICY`, `SECURITYHUB_POLICY`, `SERVICE_CONTROL_POLICY`, `S3_POLICY`, `TAG_POLICY`, `UPGRADE_ROLLOUT_POLICY`. | `set(string)` | `[]` | no |
@@ -62,7 +62,7 @@ This module creates following resources.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_accounts"></a> [accounts](#output\_accounts) | The accounts for the Organization. |
 | <a name="output_all_features_enabled"></a> [all\_features\_enabled](#output\_all\_features\_enabled) | Whether AWS Organization was configured with all features or only consolidated billing feature. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The Amazon Resource Name (ARN) of the Organization. |

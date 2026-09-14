@@ -8,27 +8,27 @@ This module creates following resources.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.35.1 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.12 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | tedilabs/misc/aws//modules/resource-group | ~> 0.12.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_organizations_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/organizations_policy) | resource |
 | [terraform_data.policies](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [aws_iam_policy_document.combined](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -36,7 +36,7 @@ This module creates following resources.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the Organization Policy. | `string` | n/a | yes |
 | <a name="input_policies"></a> [policies](#input\_policies) | (Required) A list of policy configurations to be combined into a single organization policy. Each policy can be either inline JSON content or a predefined template. Each item of `policies` as defined below.<br/>    (Required) `type` - The type of the policy. Valid values are `INLINE`, `TEMPLATE`.<br/>    (Optional) `content` - The policy content in JSON format. Required if `type` is `INLINE`.<br/>    (Optional) `template` - A configuration for predefined policy template. Required if `type` is `TEMPLATE`. `template` as defined below.<br/>      (Required) `name` - The name of the predefined policy template.<br/>      (Optional) `parameters` - A map of key-value pairs to customize the policy template. | `any` | n/a | yes |
 | <a name="input_type"></a> [type](#input\_type) | (Required) The type of the Organization Policy. Valid values are `AISERVICES_OPT_OUT_POLICY`, `BACKUP_POLICY`, `CHATBOT_POLICY`, `DECLARATIVE_POLICY_EC2`, `RESOURCE_CONTROL_POLICY`, `SECURITYHUB_POLICY`, `SERVICE_CONTROL_POLICY`, `TAG_POLICY`. | `string` | n/a | yes |
@@ -49,7 +49,7 @@ This module creates following resources.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_arn"></a> [arn](#output\_arn) | The Amazon Resource Name (ARN) of the Organization Policy. |
 | <a name="output_description"></a> [description](#output\_description) | The description of the Organization Policy. |
 | <a name="output_document_size"></a> [document\_size](#output\_document\_size) | The size of the Organization Policy document in bytes. |

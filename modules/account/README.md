@@ -20,26 +20,26 @@ This module creates following resources.
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.12 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.12 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.30.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.12 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | tedilabs/misc/aws//modules/resource-group | ~> 0.12.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_account_alternate_contact.billing](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/account_alternate_contact) | resource |
 | [aws_account_alternate_contact.operation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/account_alternate_contact) | resource |
 | [aws_account_alternate_contact.security](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/account_alternate_contact) | resource |
@@ -63,7 +63,7 @@ This module creates following resources.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_email"></a> [email](#input\_email) | (Required) The email address of the owner to assign to the new member account. This email address must not already be associated with another AWS account. | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | (Required) A friendly name for the member account. | `string` | n/a | yes |
 | <a name="input_additional_regions"></a> [additional\_regions](#input\_additional\_regions) | (Optional) A map of additional regions to enable for the account. Each key should be a region name and the value should be `true` to enable the region or `false` to disable it. By default, all regions are disabled. | `map(bool)` | `{}` | no |
@@ -84,7 +84,7 @@ This module creates following resources.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_additional_regions"></a> [additional\_regions](#output\_additional\_regions) | A set of additional regions enabled in the account. |
 | <a name="output_all_available_regions"></a> [all\_available\_regions](#output\_all\_available\_regions) | A set of all available regions in the account. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The Amazon Resource Name (ARN) of this account. |

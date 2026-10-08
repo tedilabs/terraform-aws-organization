@@ -3,7 +3,7 @@ locals {
     package = "terraform-aws-organization"
     version = trimspace(file("${path.module}/../../VERSION"))
     module  = basename(path.module)
-    name    = var.name
+    name    = "${coalesce(var.parent_id, local.organization_root_id)}/${var.name}"
   }
   module_tags = var.module_tags_enabled ? {
     "module.terraform.io/package"   = local.metadata.package
@@ -31,7 +31,7 @@ resource "aws_organizations_organizational_unit" "this" {
 
   tags = merge(
     {
-      "Name" = local.metadata.name
+      "Name" = var.name
     },
     local.module_tags,
     var.tags,

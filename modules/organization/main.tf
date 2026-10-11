@@ -175,7 +175,7 @@ resource "aws_servicequotas_template_association" "this" {
 
 module "service_linked_role" {
   source  = "tedilabs/account/aws//modules/iam-service-linked-role"
-  version = "~> 0.33.0"
+  version = "~> 0.34.0"
 
   for_each = {
     for service_principal, role in local.service_linked_roles :
@@ -194,4 +194,8 @@ module "service_linked_role" {
     local.module_tags,
     var.tags,
   )
+
+  telemetry = {
+    enabled = false
+  }
 }

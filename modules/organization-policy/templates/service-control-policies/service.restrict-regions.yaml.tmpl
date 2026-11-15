@@ -1,0 +1,24 @@
+- Effect: Deny
+  Action:
+%{ for service in restrictedServices ~}
+  - ${service}:*
+%{ endfor ~}
+  Resource:
+  - "*"
+%{ if length(permittedRegions) > 0 || length(permittedPrincipals) > 0 ~}
+  Condition:
+%{ if length(permittedRegions) > 0 ~}
+    StringNotEquals:
+      "aws:RequestedRegion":
+%{ for region in permittedRegions ~}
+      - ${region}
+%{ endfor ~}
+%{ endif ~}
+%{ if length(permittedPrincipals) > 0 ~}
+    ArnNotLike:
+      "aws:PrincipalARN":
+%{ for principal in permittedPrincipals ~}
+      - ${principal}
+%{ endfor ~}
+%{ endif ~}
+%{ endif ~}

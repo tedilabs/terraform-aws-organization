@@ -4,6 +4,34 @@ This module creates following resources.
 
 - `aws_organizations_policy`
 
+## Restrict regions for specific services
+
+Use the `service/restrict-regions` SCP template to deny all actions for selected
+AWS services outside `permittedRegions`. Other services are unaffected by this
+statement. `restrictedServices` must contain at least one service prefix.
+
+```hcl
+policies = [
+  {
+    type = "TEMPLATE"
+    template = {
+      name = "service/restrict-regions"
+      parameters = {
+        restrictedServices  = ["ec2", "rds"]
+        permittedRegions    = ["ap-northeast-1", "ap-northeast-2"]
+        permittedPrincipals = ["arn:aws:iam::123456789012:role/allow-full-access"]
+      }
+    }
+  }
+]
+```
+
+`permittedPrincipals` is optional and defaults to no exceptions. An empty
+`permittedRegions` set denies the selected services in all regions, except for
+permitted principals. The template checks `aws:RequestedRegion`, which identifies
+the API endpoint region, not all regions affected by an operation. It does not
+grant access or override denies in other policies.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

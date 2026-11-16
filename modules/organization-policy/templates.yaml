@@ -171,5 +171,26 @@ SERVICE_CONTROL_POLICY:
           description: A set of permitted IAM principal ARNs.
           default: []
 
+  service/restrict-regions:
+    name: service/restrict-regions
+    description: Restrict specific AWS services to permitted regions.
+    file_path: templates/service-control-policies/service.restrict-regions.yaml.tmpl
+    enabled: true
+    parameters:
+      required:
+        restrictedServices:
+          type: "set(string)"
+          description: A non-empty set of AWS service prefixes to restrict (e.g., "ec2", "rds").
+          default: []
+        permittedRegions:
+          type: "set(string)"
+          description: A set of permitted regions. An empty set denies the specified services in all regions.
+          default: []
+      optional:
+        permittedPrincipals:
+          type: "set(string)"
+          description: A set of permitted IAM principal ARNs.
+          default: []
+
 
 TAG_POLICY: {}

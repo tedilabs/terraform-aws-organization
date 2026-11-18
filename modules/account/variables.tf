@@ -42,7 +42,7 @@ variable "delegated_services" {
   description = <<EOF
   (Optional) A configurations of delegated services for which you want to make the member account a delegated administrator. `delegated_services` as defined below.
     (Required) `name` - The service principal for the AWS service for which you want to make the member account a delegated administrator. You can find the service principal in the `ServicePrincipal` field in the `ListDelegatedAdministrators` API response. For example, `guardduty.amazonaws.com` is the service principal for Amazon GuardDuty.
-    (Optional) `regions` - (For regional delegated administration services only) A set of target regions to enable the delegated administrator account in. If you do not specify any regions, the delegated administrator account is enabled in all supported regions.
+    (Optional) `regions` - (For regional delegated administration services only) A set of target regions to enable the delegated administrator account in. Required for regional delegated administration services: `guardduty.amazonaws.com`, `inspector2.amazonaws.com`, `macie.amazonaws.com` and `securityhub.amazonaws.com`.
   EOF
   type = list(object({
     name    = string
@@ -57,6 +57,15 @@ variable "delegated_services" {
       service.name != null && service.name != ""
     ])
     error_message = "All delegated services must have a valid non-empty name (service principal)."
+  }
+
+  validation {
+    condition = alltrue([
+      for service in var.delegated_services :
+      length(service.regions) > 0
+      if contains(local.regional_services, service.name)
+    ])
+    error_message = "`regions` must have at least one region for regional delegated administration services: `guardduty.amazonaws.com`, `inspector2.amazonaws.com`, `macie.amazonaws.com` and `securityhub.amazonaws.com`. The delegated administrator account is not registered without regions."
   }
 }
 

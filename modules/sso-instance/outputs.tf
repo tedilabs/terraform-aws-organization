@@ -10,7 +10,7 @@ output "arn" {
 
 output "identity_store_id" {
   description = "The identifier of the identity store connected to the SSO Instance."
-  value       = tolist(data.aws_ssoadmin_instances.this.identity_store_ids)[0]
+  value       = awscc_sso_instance.this.identity_store_id
 }
 
 output "name" {

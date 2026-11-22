@@ -116,7 +116,7 @@ output "security_contact" {
 }
 
 output "policies" {
-  description = "A set of policy IDs attached to the Organization Unit."
+  description = "A set of policy IDs attached to the account."
   value       = values(aws_organizations_policy_attachment.this)[*].policy_id
 }
 

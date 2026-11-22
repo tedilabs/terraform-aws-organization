@@ -83,7 +83,7 @@ trusted_token_issuers = [
 | Name | Description |
 | ---- | ----------- |
 | <a name="output_access_control_attributes"></a> [access\_control\_attributes](#output\_access\_control\_attributes) | A map of attributes for access control are used in permission policies that determine who in an identity source can access your AWS resources. |
-| <a name="output_access_control_attributes_status"></a> [access\_control\_attributes\_status](#output\_access\_control\_attributes\_status) | The status of ID of the Instance Access Control Attribute `instance_arn`. |
+| <a name="output_access_control_attributes_status"></a> [access\_control\_attributes\_status](#output\_access\_control\_attributes\_status) | The status of the instance access control attributes. |
 | <a name="output_arn"></a> [arn](#output\_arn) | The Amazon Resource Name (ARN) of the SSO Instance. |
 | <a name="output_identity_store_id"></a> [identity\_store\_id](#output\_identity\_store\_id) | The identifier of the identity store connected to the SSO Instance. |
 | <a name="output_name"></a> [name](#output\_name) | The name of the SSO Instance. |

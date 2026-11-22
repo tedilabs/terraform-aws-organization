@@ -49,7 +49,7 @@ variable "enabled_policy_types" {
 
 variable "policies" {
   description = <<EOF
-  (Optional) A map of policies to be attached to the Organization. Each key is only used internally within Terraform code. Each value is the ID of the policy to  be attached.
+  (Optional) A map of policies to be attached to the Organization. Each key is only used internally within Terraform code. Each value is the ID of the policy to be attached.
   EOF
   type        = map(string)
   default     = {}

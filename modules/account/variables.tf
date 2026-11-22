@@ -71,7 +71,7 @@ variable "delegated_services" {
 
 variable "policies" {
   description = <<EOF
-  (Optional) A map of policies to be attached to the Organization Unit. Each key is only used internally within Terraform code. Each value is the ID of the policy to  be attached.
+  (Optional) A map of policies to be attached to the Organization Unit. Each key is only used internally within Terraform code. Each value is the ID of the policy to be attached.
   EOF
   type        = map(string)
   default     = {}

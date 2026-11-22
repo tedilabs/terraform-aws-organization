@@ -6,7 +6,7 @@ variable "region" {
 }
 
 variable "account_id" {
-  description = "(Required) The identifier of an AWS account which the assignment willb e created. Typically a 10-12 digit string."
+  description = "(Required) The identifier of an AWS account which the assignment will be created. Typically a 10-12 digit string."
   type        = string
   nullable    = false
 }

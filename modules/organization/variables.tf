@@ -12,7 +12,7 @@ variable "all_features_enabled" {
 }
 
 variable "trusted_access_enabled_service_principals" {
-  description = "(Optional) List of AWS service principal names for which you want to enable integration with the organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must `all_featrues_enabled` set to true."
+  description = "(Optional) List of AWS service principal names for which you want to enable integration with the organization. This is typically in the form of a URL, such as service-abbreviation.amazonaws.com. Organization must `all_features_enabled` set to true."
   type        = set(string)
   default     = []
   nullable    = false

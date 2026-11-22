@@ -22,7 +22,7 @@ locals {
 
 
 ###################################################
-# Organizationl Unit
+# Organizational Unit
 ###################################################
 
 resource "aws_organizations_organizational_unit" "this" {

@@ -40,7 +40,7 @@ output "access_control_attributes" {
 }
 
 output "access_control_attributes_status" {
-  description = "The status of ID of the Instance Access Control Attribute `instance_arn`."
+  description = "The status of the instance access control attributes."
   value       = one(aws_ssoadmin_instance_access_control_attributes.this[*].status)
 }
 

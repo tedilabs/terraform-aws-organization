@@ -40,7 +40,7 @@ locals {
 # - `cost-optimization-hub.bcm.amazonaws.com`
 # - `eks.amazonaws.com`
 # - `health.amazonaws.com`
-# - `notifications.amazonaws.com`
+# - `notifications.amazon.com`
 # - `reporting.trustedadvisor.amazonaws.com`
 # - `resource-explorer-2.amazonaws.com`
 # - `sso.amazonaws.com`

@@ -18,7 +18,7 @@ variable "parent_id" {
 }
 
 variable "close_on_delete" {
-  description = "(Optional) Whether to close the account on deletion. It will only remove from the organization if true. This is not supported for GovCloud accounts. Defaults to `false`."
+  description = "(Optional) Whether to close the account on deletion. It will only remove from the organization if `false`. This is not supported for GovCloud accounts. Defaults to `false`."
   default     = false
   type        = bool
   nullable    = false

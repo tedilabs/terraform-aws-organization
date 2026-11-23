@@ -72,5 +72,5 @@ This module creates following resources.
 | <a name="output_region"></a> [region](#output\_region) | The AWS region this module resources resides in. |
 | <a name="output_relay_state"></a> [relay\_state](#output\_relay\_state) | The relay state URL used to redirect users within the application during the federation authentication process. |
 | <a name="output_resource_group"></a> [resource\_group](#output\_resource\_group) | The resource group created to manage resources in this module. |
-| <a name="output_session_duration"></a> [session\_duration](#output\_session\_duration) | The length of time that the application user sessions are valid in seconds. |
+| <a name="output_session_duration"></a> [session\_duration](#output\_session\_duration) | The length of time that the application user sessions are valid, in the ISO-8601 standard (e.g. `PT1H`). |
 <!-- END_TF_DOCS -->

@@ -93,11 +93,11 @@ resource "aws_organizations_organization" "this" {
   lifecycle {
     precondition {
       condition     = !(length(var.trusted_access_enabled_service_principals) > 0) || var.all_features_enabled
-      error_message = "Trusted Accesses must be enabled when all features are enabled."
+      error_message = "`all_features_enabled` must be `true` to enable trusted accesses."
     }
     precondition {
       condition     = !(length(var.enabled_policy_types) > 0) || var.all_features_enabled
-      error_message = "Policy Types must be enabled when all features are enabled."
+      error_message = "`all_features_enabled` must be `true` to enable policy types."
     }
     ignore_changes = [
       aws_service_access_principals,

@@ -38,7 +38,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 | ---- | ----------- | ---- | ------- | :------: |
-| <a name="input_account_id"></a> [account\_id](#input\_account\_id) | (Required) The identifier of an AWS account which the assignment willb e created. Typically a 10-12 digit string. | `string` | n/a | yes |
+| <a name="input_account_id"></a> [account\_id](#input\_account\_id) | (Required) The identifier of an AWS account which the assignment will be created. Typically a 10-12 digit string. | `string` | n/a | yes |
 | <a name="input_permission_set_arn"></a> [permission\_set\_arn](#input\_permission\_set\_arn) | (Required) The ARN of the Permission Set that the admin wants to grant the principal access to. | `string` | n/a | yes |
 | <a name="input_groups"></a> [groups](#input\_groups) | (Optional) A set of names of Group entities who can access to the Permission Set. | `set(string)` | `[]` | no |
 | <a name="input_region"></a> [region](#input\_region) | (Optional) The region in which to create the module resources. If not provided, the module resources will be created in the provider's configured region. | `string` | `null` | no |

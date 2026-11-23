@@ -22,7 +22,7 @@ locals {
 
 
 ###################################################
-# Organization Acoount
+# Organization Account
 ###################################################
 
 # INFO: Not supported attributes
